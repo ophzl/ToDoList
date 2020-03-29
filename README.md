@@ -1,8 +1,10 @@
-# projet-js
+# Projet JS
 
-> 
+> Ce projet a été créé avec Vue.js
+>
+>// TODO
 
-## Build Setup
+## Installation
 
 ``` bash
 # install dependencies
