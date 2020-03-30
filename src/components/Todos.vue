@@ -34,7 +34,8 @@ export default {
       const updateTodo = {
         title: todo.title,
         description: todo.description,
-        done: true
+        done: true,
+        remindDate: todo.remindDate,
       }
       localStorage.setItem(todoKey, JSON.stringify(updateTodo))
       location.reload()
@@ -48,7 +49,8 @@ export default {
       const updateTodo = {
         title: todo.title,
         description: todo.description,
-        done: false
+        done: false,
+        remindDate: todo.remindDate,
       }
       localStorage.setItem(todoKey, JSON.stringify(updateTodo))
       location.reload()
@@ -62,9 +64,10 @@ export default {
       const updateTodo = {
         title: todo.title,
         description: todo.description,
-        done: todo.done
+        done: todo.done,
+        remindDate: todo.remindDate,
       }
-      console.log(updateTodo)
+      console.log(updateTodo.remindDate)
       localStorage.setItem(todoKey, JSON.stringify(updateTodo))
     }
   },
@@ -72,5 +75,7 @@ export default {
 </script>
 
 <style scoped>
-
+  #todolist {
+    margin-top: 5rem;
+  }
 </style>

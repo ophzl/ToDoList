@@ -24,7 +24,4 @@ export default {
     text-align: center;
     color: #2c3e50;
   }
-  #todolist {
-    margin-top: 5rem;
-  }
 </style>

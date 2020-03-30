@@ -15,6 +15,10 @@
               <label>Description</label>
               <input v-model="desc" type='text' ref='desc'>
             </div>
+            <div class='field'>
+              <label>Choose a date</label>
+              <b-form-datepicker v-model="remindDate" class="mb-2" locale="fr-FR"></b-form-datepicker>
+            </div>
             <div class='ui two button attached buttons'>
               <button class='ui basic blue button' type="submit">
                 Créer
@@ -38,6 +42,7 @@
       return {
         title: '',
         desc: '',
+        remindDate: '',
         isCreating: false
       }
     },
@@ -53,11 +58,13 @@
         const newTodo = {
           title: this.title,
           description: this.desc,
-          done: false
+          done: false,
+          remindDate: this.remindDate,
         };
         this.$emit('add-todo', newTodo);
         this.title = '';
-        this.desc = ''
+        this.desc = '';
+        this.remindDate = '';
       }
 
     }

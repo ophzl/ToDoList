@@ -7,6 +7,9 @@
       <div class='meta'>
         {{ todo.description }}
       </div>
+      <div class='meta'>
+        Date de fin : {{ todo.remindDate }}
+      </div>
       <div class='extra content'>
         <span class='right floated trash icon' v-on:click="deleteTodo(todo)">
           <i class='trash icon'></i>
@@ -27,13 +30,15 @@
             <label>Description</label>
             <input type='text' v-model="todo.description">
           </div>
-<!--          <div class='ui two button attached buttons'>-->
-<!--            <button class='ui basic blue button' type="submit" @click="editTodo(todo)">-->
-<!--              Fermer-->
-<!--            </button>-->
-<!--          </div>-->
+          <div class='field'>
+            <label>Choose a date</label>
+            <b-form-datepicker v-model="remindDate" class="mb-2"></b-form-datepicker>
+          </div>
         </div>
       </form>
+    </div>
+    <div class="mx-auto">
+      <b-checkbox v-show="isEditing" value="true">Evenement important</b-checkbox>
     </div>
     <div class='ui bottom attached green basic button' v-show="!isEditing && todo.done" @click="uncompleteTodo(todo)">
       Terminé
@@ -46,13 +51,16 @@
 </template>
 
 <script type="text/javascript">/* eslint-disable */
+
 export default {
   name: 'Todo',
   props: ['todo'],
   data () {
-
     return {
+      // STATES
       isEditing: false,
+      isHidden: true,
+      remindDate: '',
     }
   },
   methods: {
