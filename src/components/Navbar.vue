@@ -27,7 +27,7 @@
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#">Se connecter</a>
           <a class="dropdown-item" href="#">S'inscrire</a>
-          <a class="dropdown-divider"></a>
+          <div class="dropdown-divider"></div>
           <router-link class="dropdown-item" to="/user">Mon compte</router-link>
         </div>
       </div>
