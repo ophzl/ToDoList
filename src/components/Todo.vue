@@ -17,56 +17,63 @@
       </div>
     </div>
     <div class="content" v-show="isEditing">
-      <div class='ui form'>
-        <div class='field'>
-          <label>Titre</label>
-          <input type='text' v-model="todo.title">
+      <form @submit="editTodo(todo)">
+        <div class='ui form'>
+          <div class='field'>
+            <label>Titre</label>
+            <input type='text' v-model="todo.title">
+          </div>
+          <div class='field'>
+            <label>Description</label>
+            <input type='text' v-model="todo.description">
+          </div>
+<!--          <div class='ui two button attached buttons'>-->
+<!--            <button class='ui basic blue button' type="submit" @click="editTodo(todo)">-->
+<!--              Fermer-->
+<!--            </button>-->
+<!--          </div>-->
         </div>
-        <div class='field'>
-          <label>Description</label>
-          <input type='text' v-model="todo.description">
-        </div>
-        <div class='ui two button attached buttons'>
-          <button class='ui basic blue button' v-on:click="hideForm">
-            Fermer
-          </button>
-        </div>
-      </div>
+      </form>
     </div>
-    <div class='ui bottom attached green basic button' v-show="!isEditing && todo.done" disabled>
+    <div class='ui bottom attached green basic button' v-show="!isEditing && todo.done" @click="uncompleteTodo(todo)">
       Terminé
     </div>
-    <div class='ui bottom attached red basic button' v-show="!isEditing && !todo.done" @click="completeTodo">
+    <div class='ui bottom attached red basic button' v-show="!isEditing && !todo.done" @click="completeTodo(todo)">
       En attente
     </div>
+    <button class='ui basic green button' v-show="isEditing" @click="editTodo(todo)">Enregistrer</button>
   </div>
 </template>
 
-<script type="text/javascript">
-  export default {
-    name: 'Todo',
-    props: ['todo'],
-    data() {
+<script type="text/javascript">/* eslint-disable */
+export default {
+  name: 'Todo',
+  props: ['todo'],
+  data () {
 
-      return {
-        isEditing: false,
-      }
-    },
-    methods: {
-      showForm() {
-        this.isEditing = true;
-      },
-      hideForm() {
-        this.isEditing = false;
-      },
-      deleteTodo(todo) {
-        this.$emit('delete-todo', todo);
-      },
-      completeTodo(){
-        this.todo.done = true
-      }
+    return {
+      isEditing: false,
     }
-  }
+  },
+  methods: {
+    showForm () {
+      this.isEditing = true
+    },
+    editTodo (todo) {
+      this.$emit('edit-todo', todo)
+      this.isEditing = false
+    },
+    deleteTodo (todo) {
+      this.$emit('delete-todo', todo)
+    },
+    completeTodo (todo) {
+      this.$emit('complete-todo', todo)
+    },
+    uncompleteTodo (todo) {
+      this.$emit('uncomplete-todo', todo)
+    },
+  },
+}
 </script>
 
 <style scoped>

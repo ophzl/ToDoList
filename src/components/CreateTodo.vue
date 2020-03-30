@@ -30,7 +30,7 @@
   </div>
 </template>
 
-<script>
+<script>/* eslint-disable */
   // import uuid from 'uuid';
   export default {
     name: 'AddTodo',

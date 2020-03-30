@@ -1,42 +1,19 @@
 <template>
   <div id="app">
-    <ToDoList v-bind:todos="todos"/>
-    <CreateTodo v-on:add-todo="addTodo"/>
+    <Navbar/>
+    <router-view/>
   </div>
 </template>
 
-<script>
-  import ToDoList from "./components/ToDoList";
-  import CreateTodo from "./components/CreateTodo";
+<script>/* eslint-disable */
+import Navbar from './components/Navbar'
 
-  export default {
-    name: 'app',
-    components: {
-      ToDoList,
-      CreateTodo,
-    },
-    data() {
-      let returnedObject = [];
-      for (let key in localStorage) {
-        if (key.includes('todo')) {
-          let jsonString = localStorage.getItem(key);
-          returnedObject.push(JSON.parse(jsonString));
-        }
-      }
-
-      console.log(returnedObject)
-
-      return {
-        todos: returnedObject
-      }
-    },
-    methods: {
-      addTodo(newTodo) {
-        localStorage.setItem('todo-' + localStorage.length, JSON.stringify(newTodo));
-        this.todos = [...this.todos, newTodo];
-      },
-    },
-  }
+export default {
+  name: 'app',
+  components: {
+    Navbar
+  },
+}
 </script>
 
 <style>
@@ -46,6 +23,8 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    margin-top: 60px;
+  }
+  #todolist {
+    margin-top: 5rem;
   }
 </style>
