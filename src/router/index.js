@@ -1,11 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 // import App from '../App'
 import TodoList from '../components/TodoList'
 import Profile from '../components/Profile'
 import Home from '../components/Home'
+import Login from '../components/Login'
+
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 Vue.use(Router)
+Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
 
 export default new Router({
   routes: [
@@ -21,6 +27,10 @@ export default new Router({
       path: '/user',
       name: 'user',
       component: Profile
+    }, {
+      path: '/login',
+      name: 'login',
+      component: Login
     }
   ]
 })
