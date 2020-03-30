@@ -67,7 +67,6 @@ export default {
         done: todo.done,
         remindDate: todo.remindDate,
       }
-      console.log(updateTodo.remindDate)
       localStorage.setItem(todoKey, JSON.stringify(updateTodo))
     }
   },

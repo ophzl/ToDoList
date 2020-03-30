@@ -7,7 +7,7 @@
       <div class='meta'>
         {{ todo.description }}
       </div>
-      <div class='meta mt-2'>
+      <div v-show="todo.remindDate" class='meta mt-2'>
         Date de fin : {{ todo.remindDate }}
       </div>
       <div class='extra content'>
@@ -32,7 +32,7 @@
           </div>
           <div class='field'>
             <label>Choose a date</label>
-            <b-form-datepicker v-model="remindDate" class="mb-2"></b-form-datepicker>
+            <b-form-datepicker v-model="todo.remindDate" class="mb-2" locale="fr-FR"></b-form-datepicker>
           </div>
         </div>
       </form>
