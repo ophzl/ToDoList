@@ -17,21 +17,23 @@
       </div>
     </div>
     <div class="content" v-show="isEditing">
-      <div class='ui form'>
-        <div class='field'>
-          <label>Titre</label>
-          <input type='text' v-model="todo.title">
+      <form @submit="editTodo(todo)">
+        <div class='ui form'>
+          <div class='field'>
+            <label>Titre</label>
+            <input type='text' v-model="todo.title">
+          </div>
+          <div class='field'>
+            <label>Description</label>
+            <input type='text' v-model="todo.description">
+          </div>
+<!--          <div class='ui two button attached buttons'>-->
+<!--            <button class='ui basic blue button' type="submit" @click="editTodo(todo)">-->
+<!--              Fermer-->
+<!--            </button>-->
+<!--          </div>-->
         </div>
-        <div class='field'>
-          <label>Description</label>
-          <input type='text' v-model="todo.description">
-        </div>
-        <div class='ui two button attached buttons'>
-          <button class='ui basic blue button' @click="editForm(todo)">
-            Fermer
-          </button>
-        </div>
-      </div>
+      </form>
     </div>
     <div class='ui bottom attached green basic button' v-show="!isEditing && todo.done" @click="uncompleteTodo(todo)">
       Terminé
@@ -39,6 +41,7 @@
     <div class='ui bottom attached red basic button' v-show="!isEditing && !todo.done" @click="completeTodo(todo)">
       En attente
     </div>
+    <button class='ui basic green button' v-show="isEditing" @click="editTodo(todo)">Enregistrer</button>
   </div>
 </template>
 
@@ -56,9 +59,9 @@ export default {
     showForm () {
       this.isEditing = true
     },
-    editForm (todo) {
-      this.isEditing = false
+    editTodo (todo) {
       this.$emit('edit-todo', todo)
+      this.isEditing = false
     },
     deleteTodo (todo) {
       this.$emit('delete-todo', todo)
@@ -69,7 +72,7 @@ export default {
     uncompleteTodo (todo) {
       this.$emit('uncomplete-todo', todo)
     },
-  }
+  },
 }
 </script>
 
