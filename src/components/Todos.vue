@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Todo v-on:delete-todo="deleteTodo" v-on:complete-todo="completeTodo" v-on:uncomplete-todo="uncompleteTodo" v-bind:key="todo.id" v-for="todo in todos"
+    <Todo v-on:delete-todo="deleteTodo" v-on:complete-todo="completeTodo" v-on:edit-todo="editTodo" v-on:uncomplete-todo="uncompleteTodo" v-bind:key="todo.id" v-for="todo in todos"
           v-bind:todo="todo"></Todo>
   </div>
 </template>
@@ -53,10 +53,21 @@ export default {
       localStorage.setItem(todoKey, JSON.stringify(updateTodo))
       location.reload()
     },
-    editForm (todo) {
-
+    editTodo (todo) {
+      if (localStorage.getItem('loglevel:webpack-dev-server')) {
+        localStorage.removeItem('loglevel:webpack-dev-server')
+      }
+      const todoIndex = this.todos.indexOf(todo)
+      let todoKey = localStorage.key(todoIndex)
+      const updateTodo = {
+        title: todo.title,
+        description: todo.description,
+        done: todo.done
+      }
+      console.log(updateTodo)
+      localStorage.setItem(todoKey, JSON.stringify(updateTodo))
     }
-  }
+  },
 }
 </script>
 
