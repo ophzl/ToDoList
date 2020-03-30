@@ -23,7 +23,7 @@
               <button class='ui basic blue button' type="submit">
                 Créer
               </button>
-              <button class='ui basic red button' v-on:click="closeForm">
+              <button class='ui basic red button' type="reset" v-on:click="closeForm">
                 Annuler
               </button>
             </div>
