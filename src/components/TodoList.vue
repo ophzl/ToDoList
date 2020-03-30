@@ -31,7 +31,7 @@ export default {
   methods: {
     addTodo (newTodo) {
       localStorage.setItem('todo-' + localStorage.length, JSON.stringify(newTodo))
-      this.todos = [...this.todos, newTodo]
+      this.todos = [newTodo, ...this.todos]
     },
   }
 }
