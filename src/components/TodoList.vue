@@ -24,8 +24,6 @@ export default {
       }
     }
 
-    console.log(returnedObject)
-
     return {
       todos: returnedObject
     }
@@ -34,7 +32,7 @@ export default {
     addTodo (newTodo) {
       localStorage.setItem('todo-' + localStorage.length, JSON.stringify(newTodo))
       this.todos = [...this.todos, newTodo]
-    }
+    },
   }
 }
 </script>

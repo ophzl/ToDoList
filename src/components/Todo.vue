@@ -27,16 +27,16 @@
           <input type='text' v-model="todo.description">
         </div>
         <div class='ui two button attached buttons'>
-          <button class='ui basic blue button' v-on:click="hideForm">
+          <button class='ui basic blue button' @click="editForm(todo)">
             Fermer
           </button>
         </div>
       </div>
     </div>
-    <div class='ui bottom attached green basic button' v-show="!isEditing && todo.done" disabled>
+    <div class='ui bottom attached green basic button' v-show="!isEditing && todo.done" @click="uncompleteTodo(todo)">
       Terminé
     </div>
-    <div class='ui bottom attached red basic button' v-show="!isEditing && !todo.done" @click="completeTodo">
+    <div class='ui bottom attached red basic button' v-show="!isEditing && !todo.done" @click="completeTodo(todo)">
       En attente
     </div>
   </div>
@@ -56,15 +56,19 @@ export default {
     showForm () {
       this.isEditing = true
     },
-    hideForm () {
+    editForm (todo) {
       this.isEditing = false
+      this.$emit('edit-todo', todo)
     },
     deleteTodo (todo) {
       this.$emit('delete-todo', todo)
     },
-    completeTodo () {
-      this.todo.done = true
-    }
+    completeTodo (todo) {
+      this.$emit('complete-todo', todo)
+    },
+    uncompleteTodo (todo) {
+      this.$emit('uncomplete-todo', todo)
+    },
   }
 }
 </script>
