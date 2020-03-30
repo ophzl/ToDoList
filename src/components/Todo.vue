@@ -42,31 +42,31 @@
   </div>
 </template>
 
-<script type="text/javascript">
-  export default {
-    name: 'Todo',
-    props: ['todo'],
-    data() {
+<script type="text/javascript">/* eslint-disable */
+export default {
+  name: 'Todo',
+  props: ['todo'],
+  data () {
 
-      return {
-        isEditing: false,
-      }
+    return {
+      isEditing: false,
+    }
+  },
+  methods: {
+    showForm () {
+      this.isEditing = true
     },
-    methods: {
-      showForm() {
-        this.isEditing = true;
-      },
-      hideForm() {
-        this.isEditing = false;
-      },
-      deleteTodo(todo) {
-        this.$emit('delete-todo', todo);
-      },
-      completeTodo(){
-        this.todo.done = true
-      }
+    hideForm () {
+      this.isEditing = false
+    },
+    deleteTodo (todo) {
+      this.$emit('delete-todo', todo)
+    },
+    completeTodo () {
+      this.todo.done = true
     }
   }
+}
 </script>
 
 <style scoped>
