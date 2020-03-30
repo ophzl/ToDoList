@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import App from '../App'
+// import App from '../App'
 import TodoList from '../components/TodoList'
 import Profile from '../components/Profile'
+import Home from '../components/Home'
 
 Vue.use(Router)
 
@@ -11,7 +12,7 @@ export default new Router({
     {
       path: '/',
       name: 'index',
-      component: App
+      component: Home
     }, {
       path: '/todolist',
       name: 'todolist',
