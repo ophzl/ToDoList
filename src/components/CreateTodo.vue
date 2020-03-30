@@ -58,7 +58,6 @@
         this.$emit('add-todo', newTodo);
         this.title = '';
         this.desc = ''
-        location.reload()
       }
 
     }
