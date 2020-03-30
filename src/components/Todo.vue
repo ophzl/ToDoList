@@ -7,7 +7,7 @@
       <div class='meta'>
         {{ todo.description }}
       </div>
-      <div class='meta'>
+      <div class='meta mt-2'>
         Date de fin : {{ todo.remindDate }}
       </div>
       <div class='extra content'>
