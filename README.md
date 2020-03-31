@@ -2,7 +2,9 @@
 
 > Ce projet a été créé avec Vue.js
 >
->// TODO
+>Grâce à **ToDoList**, vous pouvez aisément créer des tâches, les modifier, les supprimer, les archiver, les asigner ou encore les lier à votre Google Calendar afin d'être toujours à l'heure sur vos tâches.
+>
+>Vous pouvez également partager vos tâches sur les réseaux sociaux. Pratique non ?
 
 ## Installation
 
