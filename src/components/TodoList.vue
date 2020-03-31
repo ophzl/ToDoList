@@ -16,6 +16,7 @@
 <script>/* eslint-disable */
 import Todos from './Todos'
 import CreateTodo from './CreateTodo'
+import Connection from './Connection'
 
 if (localStorage.getItem('loglevel:webpack-dev-server')) {
   localStorage.removeItem('loglevel:webpack-dev-server')
@@ -26,8 +27,10 @@ export default {
   components: {
     Todos,
     CreateTodo,
+    Connection
   },
   data () {
+    // LOCAL STORAGE
     let returnedObject = []
     for (let key in localStorage) {
       if (key.includes('todo')) {
@@ -36,6 +39,23 @@ export default {
       }
     }
 
+    console.log(user);
+    // DATABASE
+    // var Airtable = require('airtable')
+    // var base = new Airtable({apiKey: 'keyzZ3Q36O3hEoi7O'}).base('app7lIfZKOEHUTBma')
+    //
+    // let tasks = []
+    // base('tasks').select({
+    //   view: 'Grid view'
+    // }).firstPage(function (err, records) {
+    //   if (err) {
+    //     console.error(err)
+    //     return
+    //   }
+    //   for (let key in records) {
+    //     tasks.push(records[key]['_rawJson']['fields'])
+    //   }
+    // })
     return {
       todos: returnedObject
     }

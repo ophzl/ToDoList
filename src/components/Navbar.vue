@@ -29,8 +29,9 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
           <router-link class="dropdown-item" to="/connection">Se connecter / S'inscrire</router-link>
+          <div class="dropdown-item" id="logout" @click="logOut">Se déconnecter</div>
           <div class="dropdown-divider"></div>
-          <router-link class="dropdown-item" to="/user">Mon compte</router-link>
+          <router-link v-if="user" class="dropdown-item" to="/user">{{user.name}}</router-link>
         </div>
       </div>
     </div>
@@ -38,9 +39,27 @@
 </template>
 
 <script>/* eslint-disable */
+import Connection from './Connection'
+
 export default {
   name: 'navbar',
-  props: ['navbar']
+  props: ['navbar'],
+  components: {
+    Connection
+  },
+  data() {
+    var user = JSON.parse(localStorage.getItem('user'));
+    console.log(user.name)
+    return { user }
+  },
+  methods: {
+    logOut() {
+      $('#logout').click(function () {
+        firebase.auth().signOut()
+        location.reload();
+      })
+    }
+  }
 }
 </script>
 

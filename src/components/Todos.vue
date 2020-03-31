@@ -1,7 +1,8 @@
 <template>
   <div>
     <Todo v-on:delete-todo="deleteTodo" v-on:complete-todo="completeTodo" v-on:edit-todo="editTodo"
-          v-on:uncomplete-todo="uncompleteTodo" v-on:archive-todo="archiveTodo" v-bind:key="todo.id" v-for="todo in todos"
+          v-on:uncomplete-todo="uncompleteTodo" v-on:archive-todo="archiveTodo" v-bind:key="todo.id"
+          v-for="todo in todos"
           v-bind:todo="todo"></Todo>
   </div>
 </template>
@@ -18,11 +19,22 @@ export default {
   },
   methods: {
     deleteTodo (todo) {
+      // LOCALSTORAGE
       if (localStorage.getItem('loglevel:webpack-dev-server')) {
         localStorage.removeItem('loglevel:webpack-dev-server')
       }
       const todoIndex = this.todos.indexOf(todo)
       const key = localStorage.key(todoIndex)
+
+      // DATABASE
+      // var Airtable = require('airtable')
+      // var base = new Airtable({apiKey: 'keyzZ3Q36O3hEoi7O'}).base('app7lIfZKOEHUTBma')
+      //
+      // base('tasks').select({
+      //   view: 'Grid view'
+      // }).firstPage(function (err, records) {
+      //   let id = records[todoIndex]['id']
+      // })
 
       swal({
         title: 'Un instant...',
@@ -118,12 +130,12 @@ export default {
         icon: 'success',
         buttons: true,
       })
-      .then((archive) => {
-        if (archive) {
-          localStorage.setItem(todoKey, JSON.stringify(archiveTodo))
-          location.reload()
-        }
-      })
+        .then((archive) => {
+          if (archive) {
+            localStorage.setItem(todoKey, JSON.stringify(archiveTodo))
+            location.reload()
+          }
+        })
     }
   },
 }
