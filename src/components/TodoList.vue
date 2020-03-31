@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row">
-      <div class="column card mx-auto">
+      <div class="column card mx-auto p-4" v-show="todos">
         <Todos v-bind:todos="todos"/>
       </div>
 <!--      <div class="column card">-->
