@@ -3,21 +3,24 @@
     <div class="mx-auto title">
       <h1>ToDoList</h1>
       <p>Créez et partagez vos tâches en un clic !</p>
-      <div class="card mx-auto">
-        <h3>Tâches récemment ajoutées</h3>
-      </div>
+      <h5 v-if="!user">Veuillez vous connecter afin de profiter au maximum des fonctionnalités.</h5>
+<!--      <div class="card mx-auto">-->
+<!--        <h3>Tâches récemment ajoutées</h3>-->
+<!--      </div>-->
     </div>
   </div>
 </template>
 
 <script>/* eslint-disable */
 import Todos from './Todos'
+import Connection from './Connection'
 
 export default {
   name: 'home',
   props: ['home'],
   components: {
-    Todos
+    Todos,
+    Connection
   },
   data () {
     let returnedObject = []
@@ -28,8 +31,12 @@ export default {
       }
     }
 
+    var user = JSON.parse(localStorage.getItem('user'));
+    console.log(user.name)
+
     return {
-      todos: returnedObject
+      todos: returnedObject,
+      user,
     }
   }
 }
@@ -61,5 +68,10 @@ export default {
   h3 {
     text-align: left;
     padding: 2rem;
+  }
+
+  h5 {
+    padding-top: 5rem;
+    color: darkred;
   }
 </style>

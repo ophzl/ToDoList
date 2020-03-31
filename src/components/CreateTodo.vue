@@ -16,6 +16,10 @@
               <input v-model="desc" type='text' ref='desc'>
             </div>
             <div class='field'>
+              <label>Collaborateur</label>
+              <input type='text' v-model="owner" ref='owner'>
+            </div>
+            <div class='field'>
               <label>Date de fin</label>
               <b-form-datepicker v-model="remindDate" class="mb-2" locale="fr-FR"></b-form-datepicker>
             </div>
@@ -61,6 +65,7 @@
           done: false,
           remindDate: this.remindDate,
           archived: false,
+          owner: todo.owner,
         };
         this.$emit('add-todo', newTodo);
         this.title = '';

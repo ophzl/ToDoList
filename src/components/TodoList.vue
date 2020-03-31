@@ -38,24 +38,6 @@ export default {
         returnedObject.push(JSON.parse(jsonString))
       }
     }
-
-    console.log(user);
-    // DATABASE
-    // var Airtable = require('airtable')
-    // var base = new Airtable({apiKey: 'keyzZ3Q36O3hEoi7O'}).base('app7lIfZKOEHUTBma')
-    //
-    // let tasks = []
-    // base('tasks').select({
-    //   view: 'Grid view'
-    // }).firstPage(function (err, records) {
-    //   if (err) {
-    //     console.error(err)
-    //     return
-    //   }
-    //   for (let key in records) {
-    //     tasks.push(records[key]['_rawJson']['fields'])
-    //   }
-    // })
     return {
       todos: returnedObject
     }

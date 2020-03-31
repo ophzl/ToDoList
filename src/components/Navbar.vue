@@ -12,10 +12,10 @@
           <router-link class="nav-link" to="/">Accueil</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/todolist">Ma liste</router-link>
+          <router-link class="nav-link" to="/todolist" v-if="user">Ma liste</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/todo-panel">Gestion des tâches</router-link>
+          <router-link class="nav-link" to="/todo-panel" v-if="user">Gestion des tâches</router-link>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
@@ -30,8 +30,8 @@
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
           <router-link class="dropdown-item" to="/connection">Se connecter / S'inscrire</router-link>
           <div class="dropdown-item" id="logout" @click="logOut">Se déconnecter</div>
-          <div class="dropdown-divider"></div>
-          <router-link v-if="user" class="dropdown-item" to="/user">{{user.name}}</router-link>
+          <div class="dropdown-divider" v-if="user"></div>
+          <router-link v-if="user" class="dropdown-item" to="/user">Mon compte</router-link>
         </div>
       </div>
     </div>

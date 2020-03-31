@@ -36,14 +36,12 @@ export default {
           user.getIdToken().then(function () {
             console.log('connected')
             $('logout').removeClass('d-none')
-
           })
         } else {
           $('logout').addClass('d-none')
           localStorage.setItem('user', null)
           console.log('disconnected')
         }
-
       }, function (error) {
         console.log(error)
       })

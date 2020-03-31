@@ -26,16 +26,6 @@ export default {
       const todoIndex = this.todos.indexOf(todo)
       const key = localStorage.key(todoIndex)
 
-      // DATABASE
-      // var Airtable = require('airtable')
-      // var base = new Airtable({apiKey: 'keyzZ3Q36O3hEoi7O'}).base('app7lIfZKOEHUTBma')
-      //
-      // base('tasks').select({
-      //   view: 'Grid view'
-      // }).firstPage(function (err, records) {
-      //   let id = records[todoIndex]['id']
-      // })
-
       swal({
         title: 'Un instant...',
         text: 'Souhaitez-vous vraiment supprimer cette tâche ?',
@@ -67,6 +57,7 @@ export default {
         done: true,
         remindDate: todo.remindDate,
         archived: false,
+        owner: todo.owner,
       }
       localStorage.setItem(todoKey, JSON.stringify(updateTodo))
       location.reload()
@@ -83,6 +74,7 @@ export default {
         done: false,
         remindDate: todo.remindDate,
         archived: false,
+        owner: todo.owner,
       }
       localStorage.setItem(todoKey, JSON.stringify(updateTodo))
       location.reload()
@@ -99,6 +91,7 @@ export default {
         done: todo.done,
         remindDate: todo.remindDate,
         archived: false,
+        owner: todo.owner,
       }
       localStorage.setItem(todoKey, JSON.stringify(updateTodo))
       swal({
@@ -122,6 +115,7 @@ export default {
         done: todo.done,
         remindDate: todo.remindDate,
         archived: true,
+        owner: todo.owner,
       }
 
       swal({
