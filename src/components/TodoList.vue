@@ -1,12 +1,13 @@
 <template>
   <div>
+    <h1 class="mx-auto p-5">Ma liste</h1>
     <div class="row">
       <div class="column card mx-auto p-4" v-show="todos">
         <Todos v-bind:todos="todos"/>
       </div>
-<!--      <div class="column card">-->
-<!--        <Todos v-bind:todos="todos" v-for="todo in todos" v-bind:key="todo.id" v-show="todo.done"/>-->
-<!--      </div>-->
+      <!--      <div class="column card">-->
+      <!--        <Todos v-bind:todos="todos" v-for="todo in todos" v-bind:key="todo.id" v-show="todo.done"/>-->
+      <!--      </div>-->
     </div>
     <CreateTodo v-on:add-todo="addTodo"/>
   </div>
@@ -53,6 +54,10 @@ export default {
     width: 20%;
     height: 100%;
     background: #eee;
-    margin: 5%;
+    /*margin: 5%;*/
+  }
+
+  h1 {
+    font-size: 50px;
   }
 </style>

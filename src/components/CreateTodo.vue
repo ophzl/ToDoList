@@ -16,7 +16,7 @@
               <input v-model="desc" type='text' ref='desc'>
             </div>
             <div class='field'>
-              <label>Choose a date</label>
+              <label>Date de fin</label>
               <b-form-datepicker v-model="remindDate" class="mb-2" locale="fr-FR"></b-form-datepicker>
             </div>
             <div class='ui two button attached buttons'>
