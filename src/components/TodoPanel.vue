@@ -22,6 +22,7 @@ import Todo from './Todo'
       Todo
     },
     data () {
+      // Store values of a task to print them
       let returnedObject = []
       for (let key in localStorage) {
         if (key.includes('todo')) {

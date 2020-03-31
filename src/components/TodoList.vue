@@ -30,7 +30,7 @@ export default {
     Connection
   },
   data () {
-    // LOCAL STORAGE
+    // Store values of a task to print them
     let returnedObject = []
     for (let key in localStorage) {
       if (key.includes('todo')) {
@@ -43,6 +43,7 @@ export default {
     }
   },
   methods: {
+    // Add a task to local storage and print it in To Do List
     addTodo (newTodo) {
       localStorage.setItem('todo-' + localStorage.length, JSON.stringify(newTodo))
       this.todos = [newTodo, ...this.todos]

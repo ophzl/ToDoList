@@ -18,8 +18,9 @@ export default {
     Todo,
   },
   methods: {
+    // Delete a task in local storage
     deleteTodo (todo) {
-      // LOCALSTORAGE
+      // Store values of a task to print them
       if (localStorage.getItem('loglevel:webpack-dev-server')) {
         localStorage.removeItem('loglevel:webpack-dev-server')
       }
@@ -45,6 +46,7 @@ export default {
           }
         })
     },
+    // Mark a task as complete and store it in local storage
     completeTodo (todo) {
       if (localStorage.getItem('loglevel:webpack-dev-server')) {
         localStorage.removeItem('loglevel:webpack-dev-server')
@@ -62,6 +64,7 @@ export default {
       localStorage.setItem(todoKey, JSON.stringify(updateTodo))
       location.reload()
     },
+    // Mark a task as not complete and store it in local storage
     uncompleteTodo (todo) {
       if (localStorage.getItem('loglevel:webpack-dev-server')) {
         localStorage.removeItem('loglevel:webpack-dev-server')
@@ -79,6 +82,7 @@ export default {
       localStorage.setItem(todoKey, JSON.stringify(updateTodo))
       location.reload()
     },
+    // Edit a task and update values in local storage
     editTodo (todo) {
       if (localStorage.getItem('loglevel:webpack-dev-server')) {
         localStorage.removeItem('loglevel:webpack-dev-server')
@@ -102,6 +106,7 @@ export default {
         timer: 1500,
       })
     },
+    // Mark a task as archived and make it invisible in To Do List
     archiveTodo (todo) {
       if (localStorage.getItem('loglevel:webpack-dev-server')) {
         localStorage.removeItem('loglevel:webpack-dev-server')

@@ -4,9 +4,10 @@
       <h1>ToDoList</h1>
       <p>Créez et partagez vos tâches en un clic !</p>
       <h5 v-if="!user">Veuillez vous connecter afin de profiter au maximum des fonctionnalités.</h5>
-<!--      <div class="card mx-auto">-->
-<!--        <h3>Tâches récemment ajoutées</h3>-->
-<!--      </div>-->
+      <div class="card mx-auto">
+        <h3>Bientôt, ce sera trop tard pour les effectuer...</h3>
+<!--        TODO: add soon ending tasks -->
+      </div>
     </div>
   </div>
 </template>
@@ -23,6 +24,7 @@ export default {
     Connection
   },
   data () {
+    // Store values of a task to print them
     let returnedObject = []
     for (let key in localStorage) {
       if (key.includes('todo')) {
@@ -31,7 +33,8 @@ export default {
       }
     }
 
-    var user = JSON.parse(localStorage.getItem('user'));
+    // Get user
+    let user = JSON.parse(localStorage.getItem('user'));
     console.log(user.name)
 
     return {

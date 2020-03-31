@@ -29,7 +29,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
           <router-link class="dropdown-item" to="/connection">Se connecter / S'inscrire</router-link>
-          <div class="dropdown-item" id="logout" @click="logOut">Se déconnecter</div>
+          <a class="dropdown-item" id="logout" @click="logOut">Se déconnecter</a>
           <div class="dropdown-divider" v-if="user"></div>
           <router-link v-if="user" class="dropdown-item" to="/user">Mon compte</router-link>
         </div>
@@ -48,11 +48,15 @@ export default {
     Connection
   },
   data() {
-    var user = JSON.parse(localStorage.getItem('user'));
+    // Get user
+    let user = JSON.parse(localStorage.getItem('user'));
     console.log(user.name)
-    return { user }
+    return {
+      user
+    }
   },
   methods: {
+    // JQuery method to logout
     logOut() {
       $('#logout').click(function () {
         firebase.auth().signOut()

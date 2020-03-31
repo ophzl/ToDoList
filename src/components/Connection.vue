@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="firebaseui-auth-container"></div>
+    <div id="firebaseui-auth-container"/>
   </div>
 </template>
 
@@ -54,8 +54,6 @@ export default {
     }
   }
 }
-
-
 </script>
 
 <style scoped>
