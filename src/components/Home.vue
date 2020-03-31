@@ -5,7 +5,7 @@
       <p>Créez et partagez vos tâches en un clic !</p>
       <h5 v-if="!user">Veuillez vous connecter afin de profiter au maximum des fonctionnalités.</h5>
       <div class="card mx-auto">
-        <h3>Bientôt, ce sera trop tard pour les effectuer...</h3>
+        <h3>Bientôt, il sera trop tard pour les effectuer...</h3>
 <!--        TODO: add soon ending tasks -->
       </div>
     </div>
