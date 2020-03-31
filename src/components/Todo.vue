@@ -11,7 +11,7 @@
         Date de fin : {{ todo.remindDate }}
       </div>
       <div class='extra content mt-4'>
-        <a class='right floated twitter icon' v-bind:href="'https://twitter.com/intent/tweet?text=Nouvel%20évenement%20:' + todo.title" >
+        <a class='right floated twitter icon' v-bind:href="'https://twitter.com/intent/tweet?text=Nouvel%20évenement%20:%20' + todo.title" >
           <i class="twitter icon"></i>
         </a>
         <span class='right floated trash icon' v-on:click="deleteTodo(todo)">

@@ -65,7 +65,6 @@
           done: false,
           remindDate: this.remindDate,
           archived: false,
-          owner: todo.owner,
         };
         this.$emit('add-todo', newTodo);
         this.title = '';
