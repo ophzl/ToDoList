@@ -11,6 +11,9 @@
         Date de fin : {{ todo.remindDate }}
       </div>
       <div class='extra content mt-4'>
+        <a class='right floated twitter icon' v-bind:href="'https://twitter.com/intent/tweet?text=Nouvel%20évenement%20:' + todo.title" >
+          <i class="twitter icon"></i>
+        </a>
         <span class='right floated trash icon' v-on:click="deleteTodo(todo)">
           <i class='trash icon'></i>
         </span>
@@ -32,6 +35,10 @@
           <div class='field'>
             <label>Description</label>
             <input type='text' v-model="todo.description">
+          </div>
+          <div class='field'>
+            <label>Collaborateur</label>
+            <b-form-select v-model="todo.owner"/>
           </div>
           <div class='field'>
             <label>Date de fin</label>
@@ -64,6 +71,7 @@ export default {
       isEditing: false,
       isHidden: true,
       remindDate: '',
+      shareLink: 'https://twitter.com/intent/tweet?text=Cet%20évenement%20devrait%20vous%20plaire%20:' + todo.title
     }
   },
   methods: {
