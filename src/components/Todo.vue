@@ -1,5 +1,5 @@
 <template>
-  <div class='ui centered card'>
+  <div class='ui centered card' v-show="!todo.archived">
     <div class="content" v-show="!isEditing">
       <div class='header'>
         {{ todo.title }}
@@ -10,9 +10,12 @@
       <div v-show="todo.remindDate" class='meta mt-2'>
         Date de fin : {{ todo.remindDate }}
       </div>
-      <div class='extra content'>
+      <div class='extra content mt-4'>
         <span class='right floated trash icon' v-on:click="deleteTodo(todo)">
           <i class='trash icon'></i>
+        </span>
+        <span class='right floated archive icon' @click="archiveTodo(todo)">
+          <i class="archive icon"></i>
         </span>
         <span class='right floated edit icon' v-on:click="showForm">
           <i class='edit icon'></i>
@@ -70,6 +73,9 @@ export default {
     editTodo (todo) {
       this.$emit('edit-todo', todo)
       this.isEditing = false
+    },
+    archiveTodo (todo) {
+      this.$emit('archive-todo', todo)
     },
     deleteTodo (todo) {
       this.$emit('delete-todo', todo)

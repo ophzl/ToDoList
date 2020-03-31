@@ -60,6 +60,7 @@
           description: this.desc,
           done: false,
           remindDate: this.remindDate,
+          archived: false,
         };
         this.$emit('add-todo', newTodo);
         this.title = '';
