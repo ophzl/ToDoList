@@ -1,6 +1,13 @@
 <template>
   <div>
-    <Todos id="todolist" v-bind:todos="todos"/>
+    <div class="row">
+      <div class="column card mx-auto">
+        <Todos v-bind:todos="todos"/>
+      </div>
+<!--      <div class="column card">-->
+<!--        <Todos v-bind:todos="todos" v-for="todo in todos" v-bind:key="todo.id" v-show="todo.done"/>-->
+<!--      </div>-->
+    </div>
     <CreateTodo v-on:add-todo="addTodo"/>
   </div>
 </template>
@@ -8,6 +15,10 @@
 <script>/* eslint-disable */
 import Todos from './Todos'
 import CreateTodo from './CreateTodo'
+
+if (localStorage.getItem('loglevel:webpack-dev-server')) {
+  localStorage.removeItem('loglevel:webpack-dev-server')
+}
 
 export default {
   name: 'TodoList',
@@ -38,5 +49,10 @@ export default {
 </script>
 
 <style scoped>
-
+  .column {
+    width: 20%;
+    height: 100%;
+    background: #eee;
+    margin: 5%;
+  }
 </style>

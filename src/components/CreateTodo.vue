@@ -65,6 +65,7 @@
         this.title = '';
         this.desc = '';
         this.remindDate = '';
+        location.reload()
       }
 
     }

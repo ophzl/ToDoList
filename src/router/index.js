@@ -5,7 +5,7 @@ import Router from 'vue-router'
 import TodoList from '../components/TodoList'
 import Profile from '../components/Profile'
 import Home from '../components/Home'
-import Login from '../components/Login'
+import Connection from '../components/Connection'
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
@@ -28,9 +28,9 @@ export default new Router({
       name: 'user',
       component: Profile
     }, {
-      path: '/login',
-      name: 'login',
-      component: Login
+      path: '/connection',
+      name: 'connection',
+      component: Connection
     }
   ]
 })

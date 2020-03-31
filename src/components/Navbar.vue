@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand" href="#">Projet JS</a>
+    <router-link class="navbar-brand" to="/">Projet JS</router-link>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -20,13 +20,12 @@
         <button class="btn btn-outline-light my-2 my-sm-0 text-light" type="submit">Search</button>
       </form>
       <div class="nav-item dropdown">
-        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+        <a class="nav-link" id="navbarDropdown" role="button" data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-user-circle fa-2x text-light"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Se connecter</a>
-          <a class="dropdown-item" href="#">S'inscrire</a>
+          <router-link class="dropdown-item" to="/connection">Se connecter / S'inscrire</router-link>
           <div class="dropdown-divider"></div>
           <router-link class="dropdown-item" to="/user">Mon compte</router-link>
         </div>
@@ -43,7 +42,7 @@ export default {
 </script>
 
 <style scoped>
-nav {
-  background-color: dodgerblue;
-}
+  nav {
+    background-color: dodgerblue;
+  }
 </style>

@@ -1,3 +1,4 @@
+/* eslint-disable */
 (function(){
   const firebaseConfig = {
     apiKey: "AIzaSyAacBlt51BDpaAC0qowBOih6EBO0NFH03I",

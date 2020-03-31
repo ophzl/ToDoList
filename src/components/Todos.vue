@@ -36,10 +36,10 @@ export default {
             swal('Cette tâche a bien été supprimée.', {
               icon: 'success',
               timer: 1500,
+              buttons: false,
             })
             localStorage.removeItem(key)
             this.todos.splice(todoIndex, 1)
-            location.reload()
           } else {
           }
         })
@@ -101,6 +101,6 @@ export default {
 
 <style scoped>
   #todolist {
-    margin-top: 5rem;
+    margin-top: 1rem;
   }
 </style>
