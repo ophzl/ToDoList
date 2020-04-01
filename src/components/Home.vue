@@ -6,7 +6,34 @@
       <h5 v-if="!user">Veuillez vous connecter afin de profiter au maximum des fonctionnalités.</h5>
       <div class="card mx-auto">
         <h3>Bientôt, il sera trop tard pour les effectuer...</h3>
-<!--        TODO: add soon ending tasks -->
+        <div class="table-responsive pt-2 col-11 mx-auto">
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">Titre</th>
+              <th scope="col">Description</th>
+              <th scope="col">Date de fin</th>
+              <!--          <th scope="col">Priorité</th>-->
+              <th scope="col">Statut</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="task in returnedObject" v-bind:key="task.id" v-if="task.remindDate === today">
+              <td>{{ task.title }}</td>
+              <td v-if="task.description">{{ task.description }}</td>
+              <td v-else-if="!task.description">Aucune description renseignée</td>
+              <td v-if="task.remindDate">{{ task.remindDate }}</td>
+              <td v-else-if="!task.remindDate">Aucune date renseignée</td>
+              <!--          <td></td>-->
+              <td class="align-middle" style="text-align: center">
+                <span class="text-warning" v-if="task.archived">Archivée</span>
+                <span class="text-success" v-if="task.done" v-show="!task.archived">Terminée</span>
+                <span class="text-danger" v-if="!task.done" v-show="!task.archived">En attente</span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -33,12 +60,15 @@ export default {
       }
     }
 
+    let today = '2020-04-01'
+
     // Get user
-    let user = JSON.parse(localStorage.getItem('user'));
+    let user = JSON.parse(localStorage.getItem('user'))
 
     return {
-      todos: returnedObject,
       user,
+      returnedObject,
+      today
     }
   }
 }
