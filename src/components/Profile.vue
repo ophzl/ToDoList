@@ -1,99 +1,159 @@
 <template>
- <div class="container">
-	<div class="row">
-        
-        
-       <div class="col-md-11 ">
+  <!--  User informations -->
+  <div class="container pt-5">
+    <div class="card">
+      <div class="card-body">
+        <div class="col--1 ">
+          <h4>Ophélie Zeitel</h4>
+          <span>Administrateur</span>
+        </div>
+        <hr>
+        <div class="col-12 tital ">Date de première connexion :</div>
+        <div class="col order-12">15 mars 2017</div>
+        <div class="clearfix bot-border"></div>
+        <div class="col-12 tital ">Date de dernière connexion :</div>
+        <div class="col order-12">31 mars 2020</div>
+      </div>
+    </div>
 
-  <div class="card ">
-  <div class="card-heading text-white bg-primary">  <h4>Profile</h4></div>
-   <div class="card-body">
-       
-    <div class="box box-info">
-        
-        <div class="box-body">
-           <div class="col-sm-">
-                     <div  align="center"> <img alt="User Pic" src='https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortRound&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Side&eyebrowType=DefaultNatural&mouthType=Smile&skinColor=Pale' id="profile-image1" class="rounded-circle img-responsive"> 
-                     </div>
-            </div>
-            <div class="col--1 ">
-            <h4 style="color:#00b1b1;">Brice Lasagne</h4>
-              <span><p>Developpeur/Designer</p></span>            
-            </div>
-            <div class="clearfix"></div>
-            <hr style="margin:6px 0 9px 0;">
-    
-              
-  <div class="  col-12 tital" >Name:</div><div class="col order-0 tital">Brice</div>
-
-  <div class="clearfix bot-border"></div>
-
-  <div class="col-12 tital " >Last Name:</div><div class="col order-12"> Lasagne</div>
-
-  <div class="clearfix bot-border"></div>
-
-  <div class="col-12 tital " >Joined:</div><div class="col order-12">15 mars 2017</div>
-
-  <div class="clearfix bot-border"></div>
-
-  <div class="col-12 tital " >Last connection:</div><div class="col order-12">31 mars 2020</div>
-
-            </div>
-          </div>      
-        </div> 
-     </div><br>
-         <button href='#'  type="button" class="btn btn-outline-primary">Edit</button><br>
-   </div> 
-	</div><br>
-
-      
-    <div class="card-heading text-white bg-primary col-md-11 ">  <h4 >Tasks</h4></div>
-
-  <div class="table-responsive col-md-11">
-  <table class="table ">
-    <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Create:</th>
-      <th scope="col">End date:</th>
-      <th scope="col">Priority</th>
-      <th scope="col">Archive</th>
-
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Feuille impots</td>
-      <td>31/03/2020</td>
-      <td>25/04/2020</td>
-      <td>Haute</td>
-      <td class="align-middle" style="text-align: center">
-          <button type="button" class="btn btn-outline-info btn-sm m-0 ">Archive</button></td>
-    <tr>
-      <th scope="row">2</th>
-      <td>Rendre CRA</td>
-      <td>20/04/2020</td>
-      <td>30/04/2020</td>
-      <td>Basse</td>
-       <td class="align-middle" style="text-align: center">
-          <button type="button" class="btn btn-outline-info btn-sm m-0 waves-effect">Archive</button></td>
-    </tr>
-  </tbody>
-  </table>
+    <!--    User's tasks list -->
+    <div class="table-responsive pt-4">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Titre</th>
+          <th scope="col">Description</th>
+          <th scope="col">Date de fin</th>
+          <!--          <th scope="col">Priorité</th>-->
+          <th scope="col">Statut</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="task in returnedObject" v-bind:key="task.id">
+          <td>{{ task.title }}</td>
+          <td>{{ task.description }}</td>
+          <td v-if="remindDate">{{ task.remindDate }}</td>
+          <td v-else-if="!remindDate">Aucune date renseignée</td>
+          <!--          <td></td>-->
+          <td class="align-middle" style="text-align: center">
+            <span type="button" class="text-warning" v-if="task.archived">Archivée</span>
+            <span type="button" class="text-success" v-if="task.done" v-show="!task.archived">Terminée</span>
+            <span class="text-danger" v-if="!task.done" v-show="!task.archived">En attente</span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
 
 </template>
 
+<script>/* eslint-disable */
+import Todo from './Todo'
+import Todos from './Todos'
+import swal from 'sweetalert'
+
+export default {
+  name: 'Profile',
+  components: {
+    Todo,
+    Todos
+  },
+  data () {
+
+    let returnedObject = []
+    for (let key in localStorage) {
+      if (key.includes('todo')) {
+        let jsonString = localStorage.getItem(key)
+        returnedObject.push(JSON.parse(jsonString))
+      }
+    }
+
+    return {
+      returnedObject
+    }
+  },
+  methods: {
+    unarchiveTodo (todo) {
+      if (localStorage.getItem('loglevel:webpack-dev-server')) {
+        localStorage.removeItem('loglevel:webpack-dev-server')
+      }
+      const todoIndex = this.todos.indexOf(todo)
+      let todoKey = localStorage.key(todoIndex)
+
+      const unarchiveTodo = {
+        title: todo.title,
+        description: todo.description,
+        done: todo.done,
+        remindDate: todo.remindDate,
+        archived: false,
+      }
+
+      swal({
+        title: 'Êtes-vous sûr de vouloir désarchiver cette tâche ?',
+        icon: 'warning',
+        timer: 1500,
+        buttons: true,
+      })
+        .then((unarchive) => {
+          if (unarchive) {
+            localStorage.setItem(todoKey, JSON.stringify(unarchiveTodo))
+            location.reload()
+          }
+        })
+    },
+    // Mark a task as complete and store it in local storage
+    completeTodo (todo) {
+      if (localStorage.getItem('loglevel:webpack-dev-server')) {
+        localStorage.removeItem('loglevel:webpack-dev-server')
+      }
+      const todoIndex = this.todos.indexOf(todo)
+      let todoKey = localStorage.key(todoIndex)
+      const updateTodo = {
+        title: todo.title,
+        description: todo.description,
+        done: true,
+        remindDate: todo.remindDate,
+        archived: false,
+        // owner: todo.owner,
+      }
+      localStorage.setItem(todoKey, JSON.stringify(updateTodo))
+      location.reload()
+    },
+    // Mark a task as not complete and store it in local storage
+    uncompleteTodo (todo) {
+      if (localStorage.getItem('loglevel:webpack-dev-server')) {
+        localStorage.removeItem('loglevel:webpack-dev-server')
+      }
+      const todoIndex = this.todos.indexOf(todo)
+      let todoKey = localStorage.key(todoIndex)
+      const updateTodo = {
+        title: todo.title,
+        description: todo.description,
+        done: false,
+        remindDate: todo.remindDate,
+        archived: false,
+        // owner: todo.owner,
+      }
+      localStorage.setItem(todoKey, JSON.stringify(updateTodo))
+      location.reload()
+    },
+  }
+}
+</script>
+
 <style scoped>
-   #profile-image1 {
-    cursor: pointer;
-    
-     width: 110px;
-    height: 110px;
-	border:2px solid #03b1ce ;}
-	.tital{ font-size:16px; font-weight:500;}
-	 .bot-border{ border-bottom:2px #f8f8f8 solid;  margin:7px 0  5px 0}
+  .tital {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .bot-border {
+    border-bottom: 2px #f8f8f8 solid;
+    margin: 7px 0 5px 0
+  }
+
+  hr {
+    margin: 6px 0 9px 0;
+  }
 </style>
