@@ -5,9 +5,6 @@
       <div class="column card mx-auto p-4" v-show="todos">
         <Todos v-bind:todos="todos"/>
       </div>
-      <!--      <div class="column card">-->
-      <!--        <Todos v-bind:todos="todos" v-for="todo in todos" v-bind:key="todo.id" v-show="todo.done"/>-->
-      <!--      </div>-->
     </div>
     <CreateTodo v-on:add-todo="addTodo"/>
   </div>

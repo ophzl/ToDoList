@@ -28,7 +28,7 @@
           <i class="fas fa-user-circle fa-2x text-light"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          <router-link class="dropdown-item" to="/connection">Se connecter / S'inscrire</router-link>
+          <router-link class="dropdown-item" to="/connection" v-if="!user">Se connecter / S'inscrire</router-link>
           <a class="dropdown-item" id="logout" @click="logOut">Se déconnecter</a>
           <div class="dropdown-divider" v-if="user"></div>
           <router-link v-if="user" class="dropdown-item" to="/user">Mon compte</router-link>
