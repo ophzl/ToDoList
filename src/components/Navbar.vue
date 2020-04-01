@@ -15,7 +15,7 @@
           <router-link class="nav-link" to="/todolist" v-if="user">Ma liste</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/todo-panel" v-if="user">Gestion des tâches</router-link>
+          <router-link class="nav-link" to="/users" v-if="user">Gestion des utilisateurs</router-link> <!-- Ajouter rôle administrateur -->
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
