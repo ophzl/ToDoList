@@ -1,11 +1,11 @@
 <template>
-<div class="container">
+ <div class="container">
 	<div class="row">
         
         
        <div class="col-md-11 ">
 
-<div class="card ">
+  <div class="card ">
   <div class="card-heading text-white bg-primary">  <h4>Profile</h4></div>
    <div class="card-body">
        
@@ -24,19 +24,19 @@
             <hr style="margin:6px 0 9px 0;">
     
               
-<div class="  col-12 tital" >Name:</div><div class="col order-0 tital">Brice</div>
+  <div class="  col-12 tital" >Name:</div><div class="col order-0 tital">Brice</div>
 
   <div class="clearfix bot-border"></div>
 
-<div class="col-12 tital " >Last Name:</div><div class="col order-12"> Lasagne</div>
+  <div class="col-12 tital " >Last Name:</div><div class="col order-12"> Lasagne</div>
 
   <div class="clearfix bot-border"></div>
 
-<div class="col-12 tital " >Joined:</div><div class="col order-12">15 mars 2017</div>
+  <div class="col-12 tital " >Joined:</div><div class="col order-12">15 mars 2017</div>
 
   <div class="clearfix bot-border"></div>
 
-<div class="col-12 tital " >Last connection:</div><div class="col order-12">31 mars 2020</div>
+  <div class="col-12 tital " >Last connection:</div><div class="col order-12">31 mars 2020</div>
 
             </div>
           </div>      
@@ -49,7 +49,7 @@
       
     <div class="card-heading text-white bg-primary col-md-11 ">  <h4 >Tasks</h4></div>
 
-<div class="table-responsive col-md-11">
+  <div class="table-responsive col-md-11">
   <table class="table ">
     <thead>
     <tr>
@@ -82,13 +82,13 @@
     </tr>
   </tbody>
   </table>
+  </div>
 </div>
 
-<script>
-</script>
+</template>
 
-<style>
-#profile-image1 {
+<style scoped>
+   #profile-image1 {
     cursor: pointer;
     
      width: 110px;
