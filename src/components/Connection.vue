@@ -9,6 +9,7 @@ export default {
   name: 'connection',
   props: ['connection'],
   data () {
+    // Firebase data
     var firebaseConfig = {
       apiKey: 'AIzaSyC53DXhOnk58pcVdilxcEQfEWsJL3BoF6A',
       authDomain: 'jsproject-c76a3.firebaseapp.com',
@@ -18,6 +19,7 @@ export default {
       messagingSenderId: '65332872842',
       appId: '1:65332872842:web:7312cb958ee9153bd98f73'
     }
+
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig)
     var ui = new firebaseui.auth.AuthUI(firebase.auth())
@@ -29,6 +31,7 @@ export default {
       'credentialHelper': firebaseui.auth.CredentialHelper.NONE
     })
 
+    // Firebase authentication
     $(document).ready(function () {
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
