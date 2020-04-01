@@ -25,10 +25,11 @@
           <i class="fas fa-user-circle fa-2x text-light"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          <router-link class="dropdown-item" to="/connection" v-if="!user">Se connecter / S'inscrire</router-link>
-          <span type="button" class="dropdown-item" id="logout" @click="logOut">Se déconnecter</span>
+          <router-link class="dropdown-item" to="/login" v-if="!user">Se connecter</router-link>
+          <router-link class="dropdown-item" to="/register" v-if="!user">S'inscrire</router-link>
+          <span type="button" class="dropdown-item" id="logout" @click="logout" v-if="user">Se déconnecter</span>
           <div class="dropdown-divider" v-if="user"></div>
-          <router-link v-if="user" class="dropdown-item" to="/user">Mon compte</router-link>
+          <router-link class="dropdown-item" to="/user" v-if="user">Mon compte</router-link>
         </div>
       </div>
     </div>
@@ -36,30 +37,9 @@
 </template>
 
 <script>/* eslint-disable */
-import Connection from './Connection'
-
 export default {
   name: 'navbar',
-  props: ['navbar'],
-  components: {
-    Connection
-  },
-  data () {
-    // Get user
-    let user = JSON.parse(localStorage.getItem('user'))
-    return {
-      user
-    }
-  },
-  methods: {
-    // JQuery method to logout
-    logOut () {
-      $('#logout').click(function () {
-        firebase.auth().signOut()
-        location.reload()
-      })
-    }
-  }
+  props: ['user', 'logout']
 }
 </script>
 

@@ -1,15 +1,73 @@
 <template>
   <div id="app">
-    <Navbar/>
-    <router-view/>
+    <Navbar :user="user" :logout="logout"/>
+    <router-view :user="user" @addTask="addTask" :tasks="tasks"/>
   </div>
 </template>
 
 <script>/* eslint-disable */
 import Navbar from './components/Navbar'
+import Firebase from 'firebase'
+import db from '../static/js/db.js'
 
 export default {
-  name: 'app',
+  name: 'App',
+  data: function () {
+    return {
+      user: null,
+      tasks: [],
+    }
+  },
+  methods: {
+    logout: function () {
+      Firebase.auth()
+        .signOut()
+        .then(() => {
+          this.user = null
+          this.$router.push('/login')
+          console.log('disconnected')
+        })
+    },
+
+    addTask: function (title, desc, endDate, owner) {
+      db.collection('users')
+      .doc(this.user.uid)
+      .collection('tasks')
+      .add({
+        title: title,
+        description: desc,
+        isDone: false,
+        isArchived: false,
+        // owner: owner,
+        endDate: endDate
+      })
+    }
+  },
+  mounted () {
+    Firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        console.log('connected')
+        this.user = user
+
+        db.collection('users')
+        .doc(this.user.uid)
+        .collection('tasks')
+        .onSnapshot(snapshot => {
+          snapshot.forEach(doc=> {
+            this.tasks.push({
+              id: doc.id,
+              title: doc.data().title,
+              description: doc.data().description,
+              isDone: doc.data().isDone,
+              isArchived: doc.data().isArchived,
+              endDate: doc.data().endDate,
+              owner: doc.data().owner
+            })
+          })
+        })
+      }
+    })
+  },
   components: {
     Navbar
   },

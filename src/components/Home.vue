@@ -1,10 +1,11 @@
 <template>
   <div>
     <div class="mx-auto title">
+      <h1>{{ user.displayName }}</h1>
       <h1>ToDoList</h1>
       <p>Créez et partagez vos tâches en un clic !</p>
       <h5 v-if="!user">Veuillez vous connecter afin de profiter au maximum des fonctionnalités.</h5>
-      <div class="card mx-auto">
+      <div class="card mx-auto" v-if="user">
         <h3>Bientôt, il sera trop tard pour les effectuer...</h3>
         <div class="table-responsive pt-2 col-11 mx-auto">
           <table class="table">
@@ -41,33 +42,17 @@
 
 <script>/* eslint-disable */
 import Todos from './Todos'
-import Connection from './Connection'
 
 export default {
   name: 'home',
-  props: ['home'],
+  props: ['user'],
   components: {
     Todos,
-    Connection
   },
   data () {
-    // Store values of a task to print them
-    let returnedObject = []
-    for (let key in localStorage) {
-      if (key.includes('todo')) {
-        let jsonString = localStorage.getItem(key)
-        returnedObject.push(JSON.parse(jsonString))
-      }
-    }
-
     let today = '2020-04-01'
 
-    // Get user
-    let user = JSON.parse(localStorage.getItem('user'))
-
     return {
-      user,
-      returnedObject,
       today
     }
   }

@@ -9,14 +9,7 @@
   export default {
     name: 'UserPanel',
     data () {
-      // TODO: add users in db
-      let users =  [
-        { name: 'Ophélie ZEITEL', email: 'opheliezeitel@gmail.com'},
-        { name: 'Florian LEROUX', email: 'florian.leroux3@laposte.fr'}
-      ]
-
       return {
-        users
       }
     }
   }
