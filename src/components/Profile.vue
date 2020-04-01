@@ -4,15 +4,16 @@
     <div class="card">
       <div class="card-body">
         <div class="col--1 ">
-          <h4>Ophélie Zeitel</h4>
+          <h4>{{ userInfosJson['name'] }}</h4>
+          <h5>{{ userInfosJson['email'] }}</h5>
           <span>Administrateur</span>
         </div>
         <hr>
         <div class="col-12 tital ">Date de première connexion :</div>
-        <div class="col order-12">15 mars 2017</div>
+        <div class="col order-12">{{ userInfosJson['creationTime'] }}</div>
         <div class="clearfix bot-border"></div>
         <div class="col-12 tital ">Date de dernière connexion :</div>
-        <div class="col order-12">31 mars 2020</div>
+        <div class="col order-12">{{ userInfosJson['lastSignIn'] }}</div>
       </div>
     </div>
 
@@ -31,13 +32,14 @@
         <tbody>
         <tr v-for="task in returnedObject" v-bind:key="task.id">
           <td>{{ task.title }}</td>
-          <td>{{ task.description }}</td>
-          <td v-if="remindDate">{{ task.remindDate }}</td>
-          <td v-else-if="!remindDate">Aucune date renseignée</td>
+          <td v-if="task.description">{{ task.description }}</td>
+          <td v-else-if="!task.description">Aucune description renseignée</td>
+          <td v-if="task.remindDate">{{ task.remindDate }}</td>
+          <td v-else-if="!task.remindDate">Aucune date renseignée</td>
           <!--          <td></td>-->
           <td class="align-middle" style="text-align: center">
-            <span type="button" class="text-warning" v-if="task.archived">Archivée</span>
-            <span type="button" class="text-success" v-if="task.done" v-show="!task.archived">Terminée</span>
+            <span class="text-warning" v-if="task.archived">Archivée</span>
+            <span class="text-success" v-if="task.done" v-show="!task.archived">Terminée</span>
             <span class="text-danger" v-if="!task.done" v-show="!task.archived">En attente</span>
           </td>
         </tr>
@@ -51,16 +53,17 @@
 <script>/* eslint-disable */
 import Todo from './Todo'
 import Todos from './Todos'
-import swal from 'sweetalert'
+import Connection from './Connection'
 
 export default {
   name: 'Profile',
   components: {
     Todo,
-    Todos
+    Todos,
+    Connection
   },
   data () {
-
+    // Get tasks
     let returnedObject = []
     for (let key in localStorage) {
       if (key.includes('todo')) {
@@ -69,76 +72,16 @@ export default {
       }
     }
 
+    // Get user informations
+    let userInfos = localStorage.getItem('user')
+    let userInfosJson = JSON.parse(userInfos)
+    // console.log(userInfosJson['email'])
+
     return {
-      returnedObject
+      returnedObject,
+      userInfosJson
     }
   },
-  methods: {
-    unarchiveTodo (todo) {
-      if (localStorage.getItem('loglevel:webpack-dev-server')) {
-        localStorage.removeItem('loglevel:webpack-dev-server')
-      }
-      const todoIndex = this.todos.indexOf(todo)
-      let todoKey = localStorage.key(todoIndex)
-
-      const unarchiveTodo = {
-        title: todo.title,
-        description: todo.description,
-        done: todo.done,
-        remindDate: todo.remindDate,
-        archived: false,
-      }
-
-      swal({
-        title: 'Êtes-vous sûr de vouloir désarchiver cette tâche ?',
-        icon: 'warning',
-        timer: 1500,
-        buttons: true,
-      })
-        .then((unarchive) => {
-          if (unarchive) {
-            localStorage.setItem(todoKey, JSON.stringify(unarchiveTodo))
-            location.reload()
-          }
-        })
-    },
-    // Mark a task as complete and store it in local storage
-    completeTodo (todo) {
-      if (localStorage.getItem('loglevel:webpack-dev-server')) {
-        localStorage.removeItem('loglevel:webpack-dev-server')
-      }
-      const todoIndex = this.todos.indexOf(todo)
-      let todoKey = localStorage.key(todoIndex)
-      const updateTodo = {
-        title: todo.title,
-        description: todo.description,
-        done: true,
-        remindDate: todo.remindDate,
-        archived: false,
-        // owner: todo.owner,
-      }
-      localStorage.setItem(todoKey, JSON.stringify(updateTodo))
-      location.reload()
-    },
-    // Mark a task as not complete and store it in local storage
-    uncompleteTodo (todo) {
-      if (localStorage.getItem('loglevel:webpack-dev-server')) {
-        localStorage.removeItem('loglevel:webpack-dev-server')
-      }
-      const todoIndex = this.todos.indexOf(todo)
-      let todoKey = localStorage.key(todoIndex)
-      const updateTodo = {
-        title: todo.title,
-        description: todo.description,
-        done: false,
-        remindDate: todo.remindDate,
-        archived: false,
-        // owner: todo.owner,
-      }
-      localStorage.setItem(todoKey, JSON.stringify(updateTodo))
-      location.reload()
-    },
-  }
 }
 </script>
 
