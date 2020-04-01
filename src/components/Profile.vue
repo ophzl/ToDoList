@@ -84,14 +84,8 @@
   </table>
 </div>
 
-  <div class="clearfix"></div>
-<div class="bot-border"></div>
-
-
-
-</div>
-
-</template>
+<script>
+</script>
 
 <style>
 #profile-image1 {

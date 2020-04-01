@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark">
-    <router-link class="navbar-brand" to="/">Projet JS</router-link>
+    <router-link class="navbar-brand" to="/">ToDoList</router-link>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -12,7 +12,10 @@
           <router-link class="nav-link" to="/">Accueil</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/todolist">Liste</router-link>
+          <router-link class="nav-link" to="/todolist" v-if="user">Ma liste</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/todo-panel" v-if="user">Gestion des tâches</router-link>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
@@ -26,8 +29,9 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
           <router-link class="dropdown-item" to="/connection">Se connecter / S'inscrire</router-link>
-          <div class="dropdown-divider"></div>
-          <router-link class="dropdown-item" to="/user">Mon compte</router-link>
+          <a class="dropdown-item" id="logout" @click="logOut">Se déconnecter</a>
+          <div class="dropdown-divider" v-if="user"></div>
+          <router-link v-if="user" class="dropdown-item" to="/user">Mon compte</router-link>
         </div>
       </div>
     </div>
@@ -35,9 +39,31 @@
 </template>
 
 <script>/* eslint-disable */
+import Connection from './Connection'
+
 export default {
   name: 'navbar',
-  props: ['navbar']
+  props: ['navbar'],
+  components: {
+    Connection
+  },
+  data() {
+    // Get user
+    let user = JSON.parse(localStorage.getItem('user'));
+    console.log(user.name)
+    return {
+      user
+    }
+  },
+  methods: {
+    // JQuery method to logout
+    logOut() {
+      $('#logout').click(function () {
+        firebase.auth().signOut()
+        location.reload();
+      })
+    }
+  }
 }
 </script>
 

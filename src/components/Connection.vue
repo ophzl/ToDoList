@@ -1,29 +1,58 @@
 <template>
-  <div class="card" style="width: 18rem;">
-    <div class="card-body">
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" class="form-control" id="emailp" aria-describedby="emailHelp" required>
-        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-      </div>
-      <div class="form-group">
-        <label>Mot de passe</label>
-        <input type="password" class="form-control" id="passwordp">
-      </div>
-      <!-- <div class="form-group form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-      </div> -->
-      <button class="btn btn-primary" id="btnLogin">Connexion</button>
-      <button class="btn btn-primary" id="btnRegister">Inscription</button>
-    </div>
+  <div>
+    <div id="firebaseui-auth-container"/>
   </div>
 </template>
 
 <script>/* eslint-disable */
 export default {
-  name: 'login',
-  props: ['login']
+  name: 'connection',
+  props: ['connection'],
+  data () {
+    var firebaseConfig = {
+      apiKey: 'AIzaSyC53DXhOnk58pcVdilxcEQfEWsJL3BoF6A',
+      authDomain: 'jsproject-c76a3.firebaseapp.com',
+      databaseURL: 'https://jsproject-c76a3.firebaseio.com',
+      projectId: 'jsproject-c76a3',
+      storageBucket: 'jsproject-c76a3.appspot.com',
+      messagingSenderId: '65332872842',
+      appId: '1:65332872842:web:7312cb958ee9153bd98f73'
+    }
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig)
+    var ui = new firebaseui.auth.AuthUI(firebase.auth())
+    ui.start('#firebaseui-auth-container', {
+      signInOptions: [
+        firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      ],
+      signInSuccessUrl: 'http://localhost:8080/',
+      'credentialHelper': firebaseui.auth.CredentialHelper.NONE
+    })
+
+    $(document).ready(function () {
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          localStorage.setItem('user', JSON.stringify({'email': user.email, 'name': user.displayName}))
+          user.getIdToken().then(function () {
+            console.log('connected')
+            $('logout').removeClass('d-none')
+          })
+        } else {
+          $('logout').addClass('d-none')
+          localStorage.setItem('user', null)
+          console.log('disconnected')
+        }
+      }, function (error) {
+        console.log(error)
+      })
+    })
+
+    return {
+      firebase,
+      firebaseui,
+      ui
+    }
+  }
 }
 </script>
 
