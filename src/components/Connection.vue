@@ -36,7 +36,6 @@ export default {
     // Firebase authentication
     $(document).ready(function () {
       firebase.auth().onAuthStateChanged(function (user) {
-        console.log(user.metadata.creationTime)
         if (user) {
           localStorage.setItem('user', JSON.stringify({'email': user.email, 'name': user.displayName, 'creationTime': user.metadata.creationTime, 'lastSignIn': user.metadata.lastSignInTime}))
           user.getIdToken().then(function () {

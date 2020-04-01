@@ -75,7 +75,6 @@ export default {
     // Get user informations
     let userInfos = localStorage.getItem('user')
     let userInfosJson = JSON.parse(userInfos)
-    // console.log(userInfosJson['email'])
 
     return {
       returnedObject,

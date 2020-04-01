@@ -45,7 +45,8 @@
 <!--          </div>-->
           <div class="field">
             <label>Date de fin</label>
-            <b-form-datepicker v-model="todo.remindDate" class="mb-2" locale="fr-FR"></b-form-datepicker>
+            <b-form-datepicker v-model="todo.remindDate" class="mb-2" :date-format-options="{ day: 'numeric', month: 'numeric', year: 'numeric' }"
+                               locale="fr"></b-form-datepicker>
           </div>
         </div>
       </form>
@@ -69,11 +70,13 @@ export default {
   name: 'Todo',
   props: ['todo'],
   data () {
+    let remindDate = ''
+
     return {
       // STATES
       isEditing: false,
       isHidden: true,
-      remindDate: '',
+      remindDate
     }
   },
   methods: {

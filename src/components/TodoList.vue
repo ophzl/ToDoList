@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="mx-auto p-5">Ma liste</h1>
+    <h1 class="mx-auto p-5">Liste des tâches</h1>
     <div class="row">
       <div class="column card mx-auto p-4" v-show="todos">
         <Todos v-bind:todos="todos"/>
