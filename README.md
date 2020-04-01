@@ -1,4 +1,4 @@
-# Projet JS
+# ToDoList
 
 > Ce projet a été créé avec Vue.js
 >
