@@ -1,10 +1,12 @@
 <template>
   <div>
-    <div id="firebaseui-auth-container"/>
+    <div id="firebaseui-auth-container" class="mt-5"/>
+    <span>Si cette page s'affiche mal, merci de la réactualiser.</span>
   </div>
 </template>
 
 <script>/* eslint-disable */
+
 export default {
   name: 'connection',
   props: ['connection'],
@@ -56,7 +58,7 @@ export default {
       firebaseui,
       ui
     }
-  }
+  },
 }
 </script>
 
