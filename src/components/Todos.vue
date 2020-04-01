@@ -1,7 +1,7 @@
 <template>
   <div>
     <Todo v-on:delete-todo="deleteTodo" v-on:complete-todo="completeTodo" v-on:edit-todo="editTodo"
-          v-on:uncomplete-todo="uncompleteTodo" v-on:archive-todo="archiveTodo" v-bind:key="todo.id"
+          v-on:uncomplete-todo="uncompleteTodo" v-on:archive-todo="archiveTodo" v-on:unarchive-todo="unarchiveTodo" v-bind:key="todo.id"
           v-for="todo in todos"
           v-bind:todo="todo"></Todo>
   </div>
@@ -59,7 +59,7 @@ export default {
         done: true,
         remindDate: todo.remindDate,
         archived: false,
-        owner: todo.owner,
+        // owner: todo.owner,
       }
       localStorage.setItem(todoKey, JSON.stringify(updateTodo))
       location.reload()
@@ -77,7 +77,7 @@ export default {
         done: false,
         remindDate: todo.remindDate,
         archived: false,
-        owner: todo.owner,
+        // owner: todo.owner,
       }
       localStorage.setItem(todoKey, JSON.stringify(updateTodo))
       location.reload()
@@ -95,7 +95,7 @@ export default {
         done: todo.done,
         remindDate: todo.remindDate,
         archived: false,
-        owner: todo.owner,
+        // owner: todo.owner,
       }
       localStorage.setItem(todoKey, JSON.stringify(updateTodo))
       swal({
@@ -106,7 +106,7 @@ export default {
         timer: 1500,
       })
     },
-    // Mark a task as archived and make it invisible in To Do List
+    // Mark a task as archived
     archiveTodo (todo) {
       if (localStorage.getItem('loglevel:webpack-dev-server')) {
         localStorage.removeItem('loglevel:webpack-dev-server')
@@ -120,18 +120,47 @@ export default {
         done: todo.done,
         remindDate: todo.remindDate,
         archived: true,
-        owner: todo.owner,
+        // owner: todo.owner,
       }
 
       swal({
         title: 'Tâche archivée !',
-        text: 'Si vous souhaitez la désarchiver, rendez-vous sur la page de gestion de vos tâches.',
+        text: 'Pour la désarchiver, il vous suffit de cliquer sur le boutton "Archivé". ',
         icon: 'success',
         buttons: true,
       })
         .then((archive) => {
           if (archive) {
             localStorage.setItem(todoKey, JSON.stringify(archiveTodo))
+            location.reload()
+          }
+        })
+    },
+    // Mark a task as archived
+    unarchiveTodo (todo) {
+      if (localStorage.getItem('loglevel:webpack-dev-server')) {
+        localStorage.removeItem('loglevel:webpack-dev-server')
+      }
+      const todoIndex = this.todos.indexOf(todo)
+      let todoKey = localStorage.key(todoIndex)
+
+      const unarchiveTodo = {
+        title: todo.title,
+        description: todo.description,
+        done: todo.done,
+        remindDate: todo.remindDate,
+        archived: false,
+      }
+
+      swal({
+        title: 'Êtes-vous sûr de vouloir désarchiver cette tâche ?',
+        icon: 'warning',
+        timer: 1500,
+        buttons: true,
+      })
+        .then((unarchive) => {
+          if (unarchive) {
+            localStorage.setItem(todoKey, JSON.stringify(unarchiveTodo))
             location.reload()
           }
         })

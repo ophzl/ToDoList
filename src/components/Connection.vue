@@ -1,61 +1,80 @@
 <template>
   <div>
-    <div id="firebaseui-auth-container"/>
+    <form class="mt-3" @submit.prevent="connection">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-6">
+            <div class="card bg-light">
+              <div class="card-body">
+                <h3 class="font-weight-light mb-3">Se connecter</h3>
+                <section class="form-group">
+                  <div class="col-12 alert alert-danger px-3" v-if="error">{{error}}</div>
+                  <label class="form-control-label sr-only" for="Email">Email</label>
+                  <input
+                    required
+                    class="form-control"
+                    type="email"
+                    id="email"
+                    placeholder="Email"
+                    v-model="email"
+                  />
+                </section>
+                <section class="form-group">
+                  <input
+                    required
+                    class="form-control"
+                    type="password"
+                    placeholder="Mot de passe"
+                    v-model="password"
+                  />
+                </section>
+                <div class="form-group text-right mb-0">
+                  <button class="btn btn-primary" type="submit">Se connecter</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <p class="text-center mt-2">
+      or
+      <router-link to="/register">register</router-link>
+    </p>
   </div>
 </template>
 
 <script>/* eslint-disable */
+import Firebase from "firebase";
+
 export default {
-  name: 'connection',
-  props: ['connection'],
-  data () {
-    var firebaseConfig = {
-      apiKey: 'AIzaSyC53DXhOnk58pcVdilxcEQfEWsJL3BoF6A',
-      authDomain: 'jsproject-c76a3.firebaseapp.com',
-      databaseURL: 'https://jsproject-c76a3.firebaseio.com',
-      projectId: 'jsproject-c76a3',
-      storageBucket: 'jsproject-c76a3.appspot.com',
-      messagingSenderId: '65332872842',
-      appId: '1:65332872842:web:7312cb958ee9153bd98f73'
-    }
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig)
-    var ui = new firebaseui.auth.AuthUI(firebase.auth())
-    ui.start('#firebaseui-auth-container', {
-      signInOptions: [
-        firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      ],
-      signInSuccessUrl: 'http://localhost:8080/',
-      'credentialHelper': firebaseui.auth.CredentialHelper.NONE
-    })
-
-    $(document).ready(function () {
-      firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-          localStorage.setItem('user', JSON.stringify({'email': user.email, 'name': user.displayName}))
-          user.getIdToken().then(function () {
-            console.log('connected')
-            $('logout').removeClass('d-none')
-          })
-        } else {
-          $('logout').addClass('d-none')
-          localStorage.setItem('user', null)
-          console.log('disconnected')
-        }
-      }, function (error) {
-        console.log(error)
-      })
-    })
-
+  data: function() {
     return {
-      firebase,
-      firebaseui,
-      ui
+      email: "",
+      password: "",
+      error: ""
+    };
+  },
+  methods: {
+    login: function() {
+      const info = {
+        email: this.email,
+        password: this.password
+      };
+      Firebase.auth()
+        .signInWithEmailAndPassword(info.email, info.password)
+        .then(
+          () => {
+            this.$router.push("meetings");
+          },
+          error => {
+            this.error = error.message;
+          }
+        );
     }
   }
-}
+};
 </script>
-
 <style scoped>
 
 </style>

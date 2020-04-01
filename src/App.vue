@@ -7,13 +7,29 @@
 
 <script>/* eslint-disable */
 import Navbar from './components/Navbar'
-
+import Navigation from "@/components/Navigation.vue";
+import Firebase from "firebase";
+import db from "./db.js";
 export default {
-  name: 'app',
+  name: "App",
+  data: function() {
+    return {
+      user: null
+    };
+  },
+  mounted() {
+    db.collection("users")
+      .doc("sZ7PtjzbqFjSDqTQYMLA")
+      .get()
+      .then(snapshot => {
+        this.user = snapshot.data().name;
+      })
+  },
   components: {
     Navbar
   },
-}
+};
+
 </script>
 
 <style>

@@ -15,10 +15,10 @@
               <label>Description</label>
               <input v-model="desc" type='text' ref='desc'>
             </div>
-            <div class="field">
-              <label>Collaborateur</label>
-              <input type="text" v-model="owner" ref='owner'>
-            </div>
+<!--            <div class="field">-->
+<!--              <label>Collaborateur</label>-->
+<!--              <input type="text" v-model="owner" ref='owner'>-->
+<!--            </div>-->
             <div class="field">
               <label>Date de fin</label>
               <b-form-datepicker v-model="remindDate" class="mb-2" locale="fr-FR"></b-form-datepicker>

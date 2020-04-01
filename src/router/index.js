@@ -6,9 +6,9 @@ import TodoList from '../components/TodoList'
 import Profile from '../components/Profile'
 import Home from '../components/Home'
 import Connection from '../components/Connection'
-import TodoPanel from '../components/TodoPanel'
 
 import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
+import UserPanel from '../components/UserPanel'
 
 Vue.use(Router)
 Vue.use(BootstrapVue)
@@ -33,9 +33,9 @@ export default new Router({
       name: 'connection',
       component: Connection
     }, {
-      path: '/todo-panel',
-      name: 'todo-panel',
-      component: TodoPanel
+      path: '/users',
+      name: 'users',
+      component: UserPanel
     }
   ]
 })
