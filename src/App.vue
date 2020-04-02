@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Navbar :user="user" :logout="logout"/>
-    <router-view :user="user" @addTask="addTask" :tasks="tasks"/>
+    <router-view :user="user" @addTask="addTask" :tasks="tasks" @deleteTask="deleteTask"/>
   </div>
 </template>
 
@@ -16,6 +16,7 @@ export default {
     return {
       user: null,
       tasks: [],
+      users: [],
     }
   },
   methods: {
@@ -41,6 +42,14 @@ export default {
         // owner: owner,
         endDate: endDate
       })
+    },
+
+    deleteTask: function (task) {
+      db.collection('users')
+      .doc(this.user.uid)
+      .collection('tasks')
+      .doc(task)
+      .delete()
     }
   },
   mounted () {
@@ -62,6 +71,15 @@ export default {
               isArchived: doc.data().isArchived,
               endDate: doc.data().endDate,
               owner: doc.data().owner
+            })
+          })
+        })
+
+        db.collection('users')
+        .onSnapshot(snapshot => {
+          snapshot.forEach(doc => {
+            this.users.push({
+              id: doc.id
             })
           })
         })

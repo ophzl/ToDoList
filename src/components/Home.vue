@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="mx-auto title">
-      <h1>{{ user.displayName }}</h1>
-      <h1>ToDoList</h1>
+      <h1>Bonjour, {{ user.displayName }}</h1>
+      <h1 v-if="!user">ToDoList</h1>
       <p>Créez et partagez vos tâches en un clic !</p>
       <h5 v-if="!user">Veuillez vous connecter afin de profiter au maximum des fonctionnalités.</h5>
       <div class="card mx-auto" v-if="user">
@@ -41,16 +41,14 @@
 </template>
 
 <script>/* eslint-disable */
-import Todos from './Todos'
 
 export default {
   name: 'home',
   props: ['user'],
   components: {
-    Todos,
   },
   data () {
-    let today = '2020-04-01'
+    let today = '2020-04-02'
 
     return {
       today

@@ -17,7 +17,7 @@
                v-bind:href="'https://twitter.com/intent/tweet?text=Nouvel%20évenement%20:%20' + taskTitle">
               <i class="twitter icon"></i>
             </a>
-            <span class="right floated trash icon">
+            <span class="right floated trash icon" @click="$emit('deleteTask', task.id)">
               <i class="trash icon"></i>
             </span>
             <span class="right floated archive icon">
@@ -39,31 +39,32 @@
         </div>
       </div>
       <!--    Edition form-->
-      <div class="content" v-show="isEditing">
-        <form>
-          <div class="ui form">
-            <div class="field">
-              <label>Titre</label>
-              <input type="text" v-model="task.title">
+      <div class="ui centered card mt-5">
+        <div class="content" v-show="isEditing">
+          <form>
+            <div class="ui form">
+              <div class="field">
+                <label>Titre</label>
+                <input type="text" v-model="task.title">
+              </div>
+              <div class="field">
+                <label>Description</label>
+                <input type='text' v-model="task.description">
+              </div>
+              <!--          <div class="field">-->
+              <!--            <label>Collaborateur</label>-->
+              <!--            <b-form-select/>-->
+              <!--          </div>-->
+              <!--            <div class="field">-->
+              <label>Date de fin</label>
+              <b-form-datepicker v-model="task.endDate" class="mb-2"
+                                 :date-format-options="{ day: 'numeric', month: 'numeric', year: 'numeric' }"
+                                 locale="fr"></b-form-datepicker>
             </div>
-            <div class="field">
-              <label>Description</label>
-              <input type='text' v-model="task.description">
-            </div>
-            <!--          <div class="field">-->
-            <!--            <label>Collaborateur</label>-->
-            <!--            <b-form-select/>-->
-            <!--          </div>-->
-            <!--            <div class="field">-->
-            <!--              <label>Date de fin</label>-->
-            <!--              <b-form-datepicker v-model="todo.remindDate" class="mb-2"-->
-            <!--                                 :date-format-options="{ day: 'numeric', month: 'numeric', year: 'numeric' }"-->
-            <!--                                 locale="fr"></b-form-datepicker>-->
-            <!--            </div>-->
-          </div>
-        </form>
+          </form>
+        </div>
+        <button class="ui basic green button " v-show="isEditing" @click="editTask(task.id)">Enregistrer</button>
       </div>
-      <button class="ui basic green button w-25 mx-auto" v-show="isEditing">Enregistrer</button>
     </div>
 
     <!--    Create task-->
@@ -77,19 +78,20 @@
             <form>
               <div class="field">
                 <label>Titre</label>
-                <input v-model="taskTitle" type="text" name="title" ref="taskTitle">
+                <input v-model="task.title" type="text" name="title" ref="taskTitle">
               </div>
               <div class="field">
                 <label>Description</label>
-                <input v-model="taskDesc" type="text" ref="taskDesc">
+                <input v-model="task.desccription" type="text" ref="taskDesc">
               </div>
-<!--              <div class="field">-->
-<!--                <label>Collaborateur</label>-->
-<!--                <input type="text" v-model="taskOwner" ref="taskOwner">-->
-<!--              </div>-->
+              <!--              <div class="field">-->
+              <!--                <label>Collaborateur</label>-->
+              <!--                <input type="text" v-model="taskOwner" ref="taskOwner">-->
+              <!--              </div>-->
               <div class="field">
                 <label>Date de fin</label>
-                <b-form-datepicker v-model="taskEndDate" ref="taskEndDate" class="mb-2" locale="fr-FR"></b-form-datepicker>
+                <b-form-datepicker v-model="taskEndDate" ref="taskEndDate" class="mb-2"
+                                   locale="fr-FR"></b-form-datepicker>
               </div>
               <div class="ui two button attached buttons">
                 <button class="ui basic blue button" type="submit" @click="handleAdd">
@@ -108,8 +110,7 @@
 </template>
 
 <script>/* eslint-disable */
-import Todos from './Todos'
-import CreateTodo from './CreateTodo'
+import db from '../../static/js/db'
 
 export default {
   name: 'TodoList',
@@ -129,6 +130,28 @@ export default {
     }
   },
   methods: {
+    editTask: function(task) {
+      const ref = db.collection('users')
+      .doc(this.user.id)
+      .collection('tasks')
+      .doc(task)
+
+      ref.get().then( doc => {
+        const title = doc.data().title
+        const description = doc.data().description
+        const endDate = doc.data().endDate
+        const isDone = doc.data().isDone
+        const isArchived = doc.data().isArchived
+        ref.update({
+          title: title,
+          description: description,
+          endDate: endDate,
+          isDone: isDone,
+          isArchived: isArchived
+        })
+      })
+    },
+
     handleAdd: function () {
       this.$emit('addTask', this.taskTitle, this.taskDesc, this.taskEndDate, this.taskIsDone, this.taskIsArchived)
       this.taskTitle = null
