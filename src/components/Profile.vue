@@ -18,13 +18,14 @@
           <div class="col order-12">{{ lastSignInTime }}</div>
           <div class="clearfix bot-border"></div>
           <div class="col order-12">
-            <button class="btn btn-outline-danger mt-2" @click="deleteAccount" @submit.prevent="profile">Supprimer mon compte</button></div>
+            <button class="btn btn-outline-danger mt-2" @click="deleteAccount">Supprimer mon compte</button></div>
         </div>
       </div>
     </div>
 
       <!--    User's tasks list -->
-      <div class="table-responsive pt-2 col-11 mx-auto">
+      <h2 class="pt-5">Mes tâches</h2>
+      <div class="table-responsive pt-2 w-75 mx-auto">
         <table class="table">
           <thead>
           <tr>
@@ -35,13 +36,16 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="task in tasks" :key="task.id" v-if="task.endDate === today && task.isDone === false && task.isArchived === false">
+          <tr v-for="task in tasks" :key="task.id" v-if="task.owner === user.displayName">
             <td>{{ task.title }}</td>
             <td v-if="task.description">{{ task.description }}</td>
             <td v-else-if="!task.description">Aucune description renseignée</td>
-            <td>{{ task.endDate }}</td>
+            <td v-if="task.endDate">{{ task.endDate }}</td>
+            <td v-else-if="!task.endDate">Aucune date renseignée</td>
             <td class="align-middle" style="text-align: center">
-              <span class="text-danger" v-if="!task.isDone" v-show="!task.isArchived">En attente</span>
+              <span class="text-warning" v-if="task.archived">Archivée</span>
+              <span class="text-success" v-if="task.done" v-show="!task.archived">Terminée</span>
+              <span class="text-danger" v-if="!task.done" v-show="!task.archived">En attente</span>
             </td>
           </tr>
           </tbody>
@@ -60,7 +64,7 @@ import ErrorMsg from './ErrorMsg'
 
 export default {
   name: 'Profile',
-  props: ['user'],
+  props: ['user', 'tasks'],
   components: {
     ErrorMsg
   },
