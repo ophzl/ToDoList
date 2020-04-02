@@ -13,6 +13,7 @@
             <tr>
               <th scope="col">Titre</th>
               <th scope="col">Description</th>
+              <th scope="col">Assigné à</th>
               <th scope="col">Date de fin</th>
               <th scope="col">Statut</th>
             </tr>
@@ -21,6 +22,7 @@
             <tr v-for="task in tasks" :key="task.id" v-if="task.endDate === today && task.isDone === false && task.isArchived === false">
               <td>{{ task.title }}</td>
               <td v-if="task.description">{{ task.description }}</td>
+              <td v-if="task.owner">{{ task.owner }}</td>
               <td v-else-if="!task.description">Aucune description renseignée</td>
               <td>{{ task.endDate }}</td>
               <td class="align-middle" style="text-align: center">
