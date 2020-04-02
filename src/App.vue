@@ -32,24 +32,24 @@ export default {
 
     addTask: function (title, desc, endDate, owner) {
       db.collection('users')
-      .doc(this.user.uid)
-      .collection('tasks')
-      .add({
-        title: title,
-        description: desc,
-        isDone: false,
-        isArchived: false,
-        // owner: owner,
-        endDate: endDate
-      })
+        .doc(this.user.uid)
+        .collection('tasks')
+        .add({
+          title: title,
+          description: desc,
+          isDone: false,
+          isArchived: false,
+          // owner: owner,
+          endDate: endDate
+        })
     },
 
     deleteTask: function (task) {
       db.collection('users')
-      .doc(this.user.uid)
-      .collection('tasks')
-      .doc(task)
-      .delete()
+        .doc(this.user.uid)
+        .collection('tasks')
+        .doc(task)
+        .delete()
     }
   },
   mounted () {
@@ -59,30 +59,21 @@ export default {
         this.user = user
 
         db.collection('users')
-        .doc(this.user.uid)
-        .collection('tasks')
-        .onSnapshot(snapshot => {
-          snapshot.forEach(doc=> {
-            this.tasks.push({
-              id: doc.id,
-              title: doc.data().title,
-              description: doc.data().description,
-              isDone: doc.data().isDone,
-              isArchived: doc.data().isArchived,
-              endDate: doc.data().endDate,
-              owner: doc.data().owner
+          .doc(this.user.uid)
+          .collection('tasks')
+          .onSnapshot(snapshot => {
+            snapshot.forEach(doc => {
+              this.tasks.push({
+                id: doc.id,
+                title: doc.data().title,
+                description: doc.data().description,
+                isDone: doc.data().isDone,
+                isArchived: doc.data().isArchived,
+                endDate: doc.data().endDate,
+                owner: doc.data().owner
+              })
             })
           })
-        })
-
-        db.collection('users')
-        .onSnapshot(snapshot => {
-          snapshot.forEach(doc => {
-            this.users.push({
-              id: doc.id
-            })
-          })
-        })
       }
     })
   },
