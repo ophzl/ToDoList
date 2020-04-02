@@ -15,6 +15,8 @@
           <div class="clearfix bot-border"></div>
           <div class="col-12 tital ">Date de dernière connexion :</div>
           <div class="col order-12">{{ lastSignInTime }}</div>
+          <div class="clearfix bot-border"></div>
+          <div class="col order-12"><button class="btn btn-outline-danger mt-2" @click="deleteAccount">Supprimer mon compte</button></div>
         </div>
       </div>
 
@@ -54,7 +56,7 @@
 
 <script>/* eslint-disable */
 import Firebase from 'firebase'
-import db from '../../static/js/db'
+import Swal from 'sweetalert2'
 
 
 export default {
@@ -63,9 +65,6 @@ export default {
   components: {
   },
   data () {
-    // db.collection('users')
-    // .get(this.user.uid)
-
     let lastSignInTime = Firebase.auth().currentUser.metadata.lastSignInTime
     let creationTime = Firebase.auth().currentUser.metadata.creationTime
 
@@ -74,6 +73,31 @@ export default {
       creationTime
     }
   },
+  methods: {
+    deleteAccount: function() {
+      Swal.fire({
+        title: 'Attention',
+        text: "Êtes-vous sûr de vouloir supprimer votre compte ?\n(Cette action est irréversible.)",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Oui, je le veux.'
+      }).then((result) => {
+        if (result.value) {
+          Swal.fire(
+            'Compte supprimé !',
+            'Vous allez être redirigé vers la page d\'accueil',
+            'success'
+          )
+          Firebase.auth().currentUser.delete().then(function() {
+            this.$router.push('/')
+          }).catch(function(error) {
+            console.log('error', error)
+          });
+        }
+      })
+    }
+  }
 }
 </script>
 
