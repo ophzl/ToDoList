@@ -14,22 +14,17 @@
               <th scope="col">Titre</th>
               <th scope="col">Description</th>
               <th scope="col">Date de fin</th>
-              <!--          <th scope="col">Priorité</th>-->
               <th scope="col">Statut</th>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="task in returnedObject" v-bind:key="task.id" v-if="task.remindDate === today">
+            <tr v-for="task in tasks" :key="task.id" v-if="task.endDate === today && task.isDone === false && task.isArchived === false">
               <td>{{ task.title }}</td>
               <td v-if="task.description">{{ task.description }}</td>
               <td v-else-if="!task.description">Aucune description renseignée</td>
-              <td v-if="task.remindDate">{{ task.remindDate }}</td>
-              <td v-else-if="!task.remindDate">Aucune date renseignée</td>
-              <!--          <td></td>-->
+              <td>{{ task.endDate }}</td>
               <td class="align-middle" style="text-align: center">
-                <span class="text-warning" v-if="task.archived">Archivée</span>
-                <span class="text-success" v-if="task.done" v-show="!task.archived">Terminée</span>
-                <span class="text-danger" v-if="!task.done" v-show="!task.archived">En attente</span>
+                <span class="text-danger" v-if="!task.isDone" v-show="!task.isArchived">En attente</span>
               </td>
             </tr>
             </tbody>
@@ -44,11 +39,16 @@
 
 export default {
   name: 'home',
-  props: ['user'],
+  props: ['user', 'tasks'],
   components: {
   },
   data () {
-    let today = '2020-04-02'
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;
 
     return {
       today

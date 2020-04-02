@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <Navbar :user="user" :logout="logout"/>
-    <router-view :user="user" @addTask="addTask" :tasks="tasks" @deleteTask="deleteTask"/>
+    <router-view :user="user" :tasks="tasks" @addTask="addTask" @deleteTask="deleteTask"
+                 @editTask="editTask"/>
   </div>
 </template>
 
@@ -16,7 +17,6 @@ export default {
     return {
       user: null,
       tasks: [],
-      users: [],
     }
   },
   methods: {
@@ -44,6 +44,13 @@ export default {
         })
     },
 
+    editTask: function (task, title, desc, endDate, owner) {
+      const ref = db.collection('users')
+        .doc(this.user.id)
+        .collection('tasks')
+        .doc(task)
+    },
+
     deleteTask: function (task) {
       db.collection('users')
         .doc(this.user.uid)
@@ -62,16 +69,33 @@ export default {
           .doc(this.user.uid)
           .collection('tasks')
           .onSnapshot(snapshot => {
-            snapshot.forEach(doc => {
-              this.tasks.push({
-                id: doc.id,
-                title: doc.data().title,
-                description: doc.data().description,
-                isDone: doc.data().isDone,
-                isArchived: doc.data().isArchived,
-                endDate: doc.data().endDate,
-                owner: doc.data().owner
-              })
+            snapshot.docChanges().forEach(change => {
+              let doc = change.doc
+              if (change.type === 'added') {
+                this.tasks.push({
+                  id: doc.id,
+                  title: doc.data().title,
+                  description: doc.data().description,
+                  isDone: doc.data().isDone,
+                  isArchived: doc.data().isArchived,
+                  endDate: doc.data().endDate,
+                  owner: doc.data().owner
+                })
+              }
+              if (change.type === 'modified') {
+                this.tasks.push({
+                  id: doc.id,
+                  title: doc.data().title,
+                  description: doc.data().description,
+                  isDone: doc.data().isDone,
+                  isArchived: doc.data().isArchived,
+                  endDate: doc.data().endDate,
+                  owner: doc.data().owner
+                })
+              }
+              if (change.type === 'removed') {
+                this.tasks.pop()
+              }
             })
           })
       }
