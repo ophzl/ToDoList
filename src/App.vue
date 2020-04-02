@@ -48,7 +48,7 @@ export default {
     },
 
     editTask: function (task) {
-      const ref = db.collection('users')
+      db.collection('users')
         .doc(this.user.id)
         .collection('tasks')
         .doc(task)
@@ -66,6 +66,14 @@ export default {
     Firebase.auth().onAuthStateChanged(user => {
         if (user) {
           this.user = user
+
+          // db.collection('users')
+          //   .doc(this.user.uid)
+          //   .add({
+          //     name: this.user.displayName,
+          //     email: this.user.email,
+          //     role: 'member'
+          //   })
 
           db.collection('users')
             .doc(this.user.uid)
