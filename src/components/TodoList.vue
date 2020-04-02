@@ -3,7 +3,7 @@
     <ErrorMsg v-if="!user"/>
     <div v-if="user">
       <div v-for="task in tasks" :key="task.id">
-        <div class="ui centered card mt-5">
+        <div class="ui centered card mt-5" v-show="!task.isArchived">
           <div class="content" v-show="!isEditing">
             <div class="header">
               {{ task.title }}
@@ -166,6 +166,11 @@ export default {
           } else {
             ref.update({
               isArchived: true
+            })
+            Swal.fire({
+              title: 'Archivée !',
+              text: 'Votre tâche a été archivée.\nPour la désarchiver, rendez-vous dans votre profil.',
+              icon: 'success',
             })
           }
         })
