@@ -15,11 +15,11 @@
               Date de fin : {{ task.endDate }}
             </div>
             <div v-show="task.owner" class="meta mt-2">
-              Collaborateur: {{ task.owner }}
+              Assigné à : {{ task.owner }}
             </div>
             <div class="extra content mt-4">
               <a class="right floated twitter icon"
-                 v-bind:href="'https://twitter.com/intent/tweet?text=Nouvel%20évenement%20:%20' + task.title">
+                 v-bind:href="'https://twitter.com/intent/tweet?text=Nouvel%20évenement%20:%20' + task.title" target="_blank">
                 <i class="twitter icon"></i>
               </a>
               <span class="right floated trash icon" @click="$emit('deleteTask', task.id)">

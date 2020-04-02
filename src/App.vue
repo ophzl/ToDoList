@@ -63,7 +63,6 @@ export default {
   mounted () {
     Firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        console.log('connected')
         this.user = user
 
         db.collection('users')
