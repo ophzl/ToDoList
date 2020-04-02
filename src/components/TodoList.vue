@@ -68,7 +68,7 @@
     </div>
 
     <!--    Create task-->
-    <div class="ui basic content center aligned segment" v-for="task in tasks" :key="task.id">
+    <div class="ui basic content center aligned segment">
       <button class="ui basic button icon" @click="openForm" v-show="!isCreating">
         <i class="plus icon"></i>
       </button>
@@ -78,11 +78,11 @@
             <form>
               <div class="field">
                 <label>Titre</label>
-                <input v-model="task.title" type="text" name="title" ref="taskTitle">
+                <input v-model="taskTitle" type="text" name="title" ref="taskTitle">
               </div>
               <div class="field">
                 <label>Description</label>
-                <input v-model="task.description" type="text" ref="taskDesc">
+                <input v-model="taskDesc" type="text" ref="taskDesc">
               </div>
               <!--              <div class="field">-->
               <!--                <label>Collaborateur</label>-->
