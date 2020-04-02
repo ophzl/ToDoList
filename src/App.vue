@@ -69,7 +69,6 @@ export default {
         db.collection('users')
           .doc(this.user.uid)
           .collection('tasks')
-          .doc()
           .onSnapshot(snapshot => {
             snapshot.docChanges().forEach(change => {
               let doc = change.doc
