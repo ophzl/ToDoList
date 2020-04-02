@@ -76,7 +76,7 @@ export default {
     background: #eeeeee;
     width: 95%;
     margin-top: 13rem;
-    height: 20rem;
+    height: 100%;
     border: none;
   }
 

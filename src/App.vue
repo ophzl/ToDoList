@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Navbar :user="user" :logout="logout"/>
-    <router-view :user="user" :tasks="tasks" @addTask="addTask" @deleteTask="deleteTask"
+    <router-view :user="user" :tasks="tasks" :users="users" @addTask="addTask" @deleteTask="deleteTask"
                  @editTask="editTask"/>
   </div>
 </template>
@@ -10,7 +10,6 @@
 import Navbar from './components/Navbar'
 import Firebase from 'firebase'
 import db from '../static/js/db.js'
-import Swal from 'sweetalert2'
 
 export default {
   name: 'App',

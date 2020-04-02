@@ -1,6 +1,7 @@
 <template>
-  <!--  User informations -->
   <div>
+    <ErrorMsg v-if="!user"/>
+    <div v-if="user">
     <div class="container pt-5">
       <div class="card">
         <div class="card-body">
@@ -20,6 +21,7 @@
             <button class="btn btn-outline-danger mt-2" @click="deleteAccount" @submit.prevent="profile">Supprimer mon compte</button></div>
         </div>
       </div>
+    </div>
 
       <!--    User's tasks list -->
 <!--      <div class="table-responsive pt-4">-->
@@ -58,12 +60,14 @@
 <script>/* eslint-disable */
 import Firebase from 'firebase'
 import Swal from 'sweetalert2'
+import ErrorMsg from './ErrorMsg'
 
 
 export default {
   name: 'Profile',
   props: ['user'],
   components: {
+    ErrorMsg
   },
   data () {
     let lastSignInTime = Firebase.auth().currentUser.metadata.lastSignInTime
