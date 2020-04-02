@@ -31,7 +31,7 @@ export default {
         })
     },
 
-    addTask: function (title, desc, endDate, owner) {
+    addTask: function (title, desc, owner, endDate) {
       db.collection('users')
         .doc(this.user.uid)
         .collection('tasks')
@@ -45,7 +45,7 @@ export default {
         })
     },
 
-    editTask: function (task, title, desc, endDate, owner) {
+    editTask: function (task) {
       const ref = db.collection('users')
         .doc(this.user.id)
         .collection('tasks')
@@ -69,6 +69,7 @@ export default {
         db.collection('users')
           .doc(this.user.uid)
           .collection('tasks')
+          .doc()
           .onSnapshot(snapshot => {
             snapshot.docChanges().forEach(change => {
               let doc = change.doc

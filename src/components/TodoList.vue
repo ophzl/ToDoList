@@ -54,24 +54,23 @@
               <div class="ui form">
                 <div class="field">
                   <label>Titre</label>
-                  <input type="text" v-model="task.title" ref="newTitle">
+                  <input type="text" v-model="task.title" ref="newTitle" required>
                 </div>
                 <div class="field">
                   <label>Description</label>
-                  <input type='text' v-model="task.description" ref="newDesc">
+                  <input type='text' v-model="task.description" ref="newDesc" required>
                 </div>
                 <div class="field">
                   <label>Assigner cette tâche à :</label>
-                  <select type="text" v-model="taskOwner" ref="taskOwner">
-                    <option v-for="user in users" :key="user.id" :value="user.id">{{ user.name }} ({{ user.email }})
-                    </option>
+                  <select type="text" v-model="task.owner" ref="taskOwner" required>
+                    <option v-for="user in users" :key="user.id" :value="user.id">{{ user.name }} ({{ user.email }})</option>
                   </select>
                 </div>
                 <div class="field">
                   <label>Date de fin</label>
                   <b-form-datepicker v-model="task.endDate" class="mb-2"
                                      :date-format-options="{ day: 'numeric', month: 'numeric', year: 'numeric' }"
-                                     locale="fr"></b-form-datepicker>
+                                     locale="fr" required></b-form-datepicker>
                 </div>
               </div>
             </form>
@@ -91,22 +90,22 @@
               <form>
                 <div class="field">
                   <label>Titre</label>
-                  <input v-model="taskTitle" type="text" name="title" ref="taskTitle">
+                  <input v-model="taskTitle" type="text" name="title" ref="taskTitle" required>
                 </div>
                 <div class="field">
                   <label>Description</label>
-                  <input v-model="taskDesc" type="text" ref="taskDesc">
+                  <input v-model="taskDesc" type="text" ref="taskDesc" required>
                 </div>
                 <div class="field">
                   <label>Assigner cette tâche à :</label>
-                  <select type="text" v-model="taskOwner" ref="taskOwner">
-                    <option>{{ users[0]['name'] }} ({{ users[0]['email'] }})</option>
+                  <select type="text" v-model="taskOwner" ref="taskOwner" id="taskOwner">
+                    <option v-for="user in users" :key="user.id" :value="user.name">{{ user.name }} ({{ user.email }})</option>
                   </select>
                 </div>
                 <div class="field">
                   <label>Date de fin</label>
                   <b-form-datepicker v-model="taskEndDate" ref="taskEndDate" class="mb-2"
-                                     locale="fr-FR"></b-form-datepicker>
+                                     locale="fr-FR" required></b-form-datepicker>
                 </div>
                 <div class="ui two button attached buttons">
                   <button class="ui basic blue button" type="submit" @click="handleAdd">
@@ -219,18 +218,20 @@ export default {
     },
 
     handleAdd: function () {
-      this.$emit('addTask', this.taskTitle, this.taskDesc, this.taskEndDate, this.taskIsDone, this.taskIsArchived)
+      this.$emit('addTask', this.taskTitle, this.taskDesc, this.taskOwner, this.taskEndDate, this.taskIsDone, this.taskIsArchived)
       this.taskTitle = null
       this.taskDesc = null
-      // this.taskOwner = null
+      this.taskOwner = null
       this.taskEndDate = null
       this.taskIsDone = null
       this.taskIsArchived = null
 
       this.$refs.taskTitle.focus()
       this.$refs.taskDesc.focus()
-      // this.$refs.taskOwner.focus()
+      this.$refs.taskOwner.focus()
       this.$refs.taskEndDate.focus()
+
+      console.log('handleAdd', this.taskOwner)
     },
 
     openEditForm () {
@@ -258,7 +259,6 @@ export default {
             name: doc.data()['name'],
             email: doc.data()['email'],
           })
-          console.log(this.users)
         })
       })
       .catch(err => {
