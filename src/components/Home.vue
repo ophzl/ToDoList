@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mx-auto title">
-      <h1>Bonjour, {{ user.displayName }}</h1>
+      <h1 v-if="user">Bonjour, {{ user.displayName }}</h1>
       <h1 v-if="!user">ToDoList</h1>
       <p>Créez et partagez vos tâches en un clic !</p>
       <h5 v-if="!user">Veuillez vous connecter afin de profiter au maximum des fonctionnalités.</h5>

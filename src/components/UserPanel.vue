@@ -44,26 +44,6 @@ export default {
   },
   mounted () {
 
-
-    db.collection('users')
-      .get()
-      .then(snapshot => {
-        if (snapshot.empty) {
-          console.log('null')
-          return
-        }
-        snapshot.forEach(doc => {
-          this.users.push({
-            id: doc.id,
-            name: doc.data()['name'],
-            email: doc.data()['email'],
-            role: doc.data()['role'],
-          })
-        })
-      })
-      .catch(err => {
-        console.log('error:', err)
-      })
   }
 }
 </script>

@@ -61,7 +61,7 @@
               <div class="field">
                 <label>Assigner cette tâche à :</label>
                 <select type="text" v-model="taskOwner" ref="taskOwner">
-                  <option>{{ users[0]['name'] }} ({{ users[0]['email'] }})</option>
+                  <option v-for="user in users" :key="user.id" :value="user.id">{{ user.name }} ({{ user.email }})</option>
                 </select>
               </div>
               <div class="field">

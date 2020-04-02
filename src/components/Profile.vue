@@ -16,7 +16,8 @@
           <div class="col-12 tital ">Date de dernière connexion :</div>
           <div class="col order-12">{{ lastSignInTime }}</div>
           <div class="clearfix bot-border"></div>
-          <div class="col order-12"><button class="btn btn-outline-danger mt-2" @click="deleteAccount">Supprimer mon compte</button></div>
+          <div class="col order-12">
+            <button class="btn btn-outline-danger mt-2" @click="deleteAccount" @submit.prevent="profile">Supprimer mon compte</button></div>
         </div>
       </div>
 
@@ -90,7 +91,7 @@ export default {
             'success'
           )
           Firebase.auth().currentUser.delete().then(function() {
-            this.$router.push('/')
+            location.reload()
           }).catch(function(error) {
             console.log('error', error)
           });

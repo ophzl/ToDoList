@@ -1,4 +1,3 @@
-import Swal from "sweetalert2"
 <template>
   <div id="app">
     <Navbar :user="user" :logout="logout"/>
@@ -19,6 +18,7 @@ export default {
     return {
       user: null,
       tasks: [],
+      users: [],
     }
   },
   methods: {
@@ -100,6 +100,26 @@ export default {
                 this.tasks.pop()
               }
             })
+          })
+
+        db.collection('users')
+          .get()
+          .then(snapshot => {
+            if (snapshot.empty) {
+              console.log('null')
+              return
+            }
+            snapshot.forEach(doc => {
+              this.users.push({
+                id: doc.id,
+                name: doc.data()['name'],
+                email: doc.data()['email'],
+                role: doc.data()['role'],
+              })
+            })
+          })
+          .catch(err => {
+            console.log('error:', err)
           })
       }
     })
