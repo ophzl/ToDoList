@@ -1,3 +1,4 @@
+import Swal from "sweetalert2"
 <template>
   <div id="app">
     <Navbar :user="user" :logout="logout"/>
@@ -10,6 +11,7 @@
 import Navbar from './components/Navbar'
 import Firebase from 'firebase'
 import db from '../static/js/db.js'
+import Swal from 'sweetalert2'
 
 export default {
   name: 'App',
@@ -39,7 +41,7 @@ export default {
           description: desc,
           isDone: false,
           isArchived: false,
-          // owner: owner,
+          owner: owner,
           endDate: endDate
         })
     },
@@ -83,6 +85,7 @@ export default {
                 })
               }
               if (change.type === 'modified') {
+                this.tasks.pop()
                 this.tasks.push({
                   id: doc.id,
                   title: doc.data().title,

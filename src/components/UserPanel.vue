@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div></div>
     <h1 class="mx-auto p-5">Liste des utilisateurs</h1>
     <div>
       <div class="table-responsive pt-2 col-11 mx-auto">
@@ -9,7 +10,6 @@
             <th scope="col">Nom</th>
             <th scope="col">Email</th>
             <th scope="col">Rôle</th>
-            <th scope="col"></th>
           </tr>
           </thead>
           <tbody>
@@ -18,9 +18,6 @@
             <td>{{ user['email'] }}</td>
             <td v-if="user['role'] === 'administrator'">Administrateur</td>
             <td v-if="user['role'] === 'member'">Membre</td>
-<!--            <td>-->
-<!--              <button @click="deleteUser">Delete</button>-->
-<!--            </td>-->
           </tr>
           </tbody>
         </table>
@@ -37,17 +34,17 @@ export default {
   name: 'UserPanel',
   props: ['user'],
   data () {
+
+
     return {
       users: []
     }
   },
-  // methods: {
-  //   deleteUser: function (user) {
-  //     let userToDelete = user.email
-  //     console.log(userToDelete)
-  //   }
-  // },
+  methods: {
+  },
   mounted () {
+
+
     db.collection('users')
       .get()
       .then(snapshot => {

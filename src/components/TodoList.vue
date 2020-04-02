@@ -12,6 +12,9 @@
           <div v-show="task.endDate" class="meta mt-2">
             Date de fin : {{ task.endDate }}
           </div>
+          <div v-show="task.owner" class="meta mt-2">
+            Collaborateur: {{ task.owner }}
+          </div>
           <div class="extra content mt-4">
             <a class="right floated twitter icon"
                v-bind:href="'https://twitter.com/intent/tweet?text=Nouvel%20évenement%20:%20' + task.title">
@@ -43,8 +46,8 @@
       </div>
 
       <!--    Edition form-->
-      <div class="ui centered card mt-5">
-        <div class="content" v-show="isEditing">
+      <div class="ui centered card mt-5" v-show="isEditing">
+        <div class="content">
           <form>
             <div class="ui form">
               <div class="field">
@@ -55,10 +58,12 @@
                 <label>Description</label>
                 <input type='text' v-model="task.description" ref="newDesc">
               </div>
-              <!--          <div class="field">-->
-              <!--            <label>Collaborateur</label>-->
-              <!--            <b-form-select/>-->
-              <!--          </div>-->
+              <div class="field">
+                <label>Assigner cette tâche à :</label>
+                <select type="text" v-model="taskOwner" ref="taskOwner">
+                  <option>{{ users[0]['name'] }} ({{ users[0]['email'] }})</option>
+                </select>
+              </div>
               <div class="field">
                 <label>Date de fin</label>
                 <b-form-datepicker v-model="task.endDate" class="mb-2"
@@ -118,6 +123,7 @@
 
 <script>/* eslint-disable */
 import db from '../../static/js/db'
+import Swal from 'sweetalert2'
 
 export default {
   name: 'TodoList',
@@ -193,11 +199,16 @@ export default {
         ref.get().then(doc => {
           const title = task.title
           const desc = task.description
+          const endDate = task.endDate
+          const owner = task.owner
           ref.update({
             title: title,
-            description: desc
+            description: desc,
+            endDate: endDate,
+            owner: owner
           })
         })
+        this.isEditing = false
       }
     },
 
