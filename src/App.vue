@@ -67,13 +67,13 @@ export default {
         if (user) {
           this.user = user
 
-          // db.collection('users')
-          //   .doc(this.user.uid)
-          //   .add({
-          //     name: this.user.displayName,
-          //     email: this.user.email,
-          //     role: 'member'
-          //   })
+          db.collection('users')
+            .doc(this.user.uid)
+            .set({
+              name: this.user.displayName,
+              email: this.user.email,
+              role: 'member'
+            })
 
           db.collection('users')
             .doc(this.user.uid)

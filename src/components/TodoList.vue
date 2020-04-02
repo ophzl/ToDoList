@@ -2,81 +2,87 @@
   <div>
     <ErrorMsg v-if="!user"/>
     <div v-if="user">
-      <div v-for="task in tasks" :key="task.id">
-        <div class="ui centered card mt-5">
-          <div class="content" v-show="!isEditing">
-            <div class="header">
-              {{ task.title }}
-            </div>
-            <div class="meta">
-              {{ task.description }}
-            </div>
-            <div v-show="task.endDate" class="meta mt-2">
-              Date de fin : {{ task.endDate }}
-            </div>
-            <div v-show="task.owner" class="meta mt-2">
-              Assigné à : {{ task.owner }}
-            </div>
-            <div class="extra content mt-4">
-              <a class="right floated twitter icon"
-                 v-bind:href="'https://twitter.com/intent/tweet?text=Nouvel%20évenement%20:%20' + task.title" target="_blank">
-                <i class="twitter icon"></i>
-              </a>
-              <span class="right floated trash icon" @click="$emit('deleteTask', task.id)">
+      <div class="card-columns p-3">
+        <div v-for="task in tasks" :key="task.id">
+          <div class="ui centered card mt-1">
+            <div class="content" v-show="!isEditing">
+              <div class="header">
+                {{ task.title }}
+              </div>
+              <div class="meta">
+                {{ task.description }}
+              </div>
+              <div v-show="task.endDate" class="meta mt-2">
+                Date de fin : {{ task.endDate }}
+              </div>
+              <div v-show="task.owner" class="meta mt-2">
+                Assigné à : {{ task.owner }}
+              </div>
+              <div class="extra content mt-4">
+                <a class="right floated twitter icon"
+                   v-bind:href="'https://twitter.com/intent/tweet?text=Nouvel%20évenement%20:%20' + task.title"
+                   target="_blank">
+                  <i class="twitter icon"></i>
+                </a>
+                <span class="right floated trash icon" @click="$emit('deleteTask', task.id)">
               <i class="trash icon"></i>
             </span>
-              <span class="right floated archive icon" @click="isArchived(task.id)">
+                <span class="right floated archive icon" @click="isArchived(task.id)">
               <i class="archive icon"></i>
             </span>
-              <span class="right floated edit icon" @click="openEditForm()">
+                <span class="right floated edit icon" @click="openEditForm()">
               <i class="edit icon"></i>
             </span>
+              </div>
+            </div>
+            <div class="ui bottom attached green basic button" v-show="!isEditing && task.isDone && !task.isArchived"
+                 @click="isDone(task.id)">
+              Terminé
+            </div>
+            <div class="ui bottom attached red basic button" v-show="!isEditing && !task.isDone && !task.isArchived"
+                 @click="isDone(task.id)">
+              En attente
+            </div>
+            <div class="ui bottom attached yellow basic button" v-if="task.isArchived" v-show="!isEditing"
+                 @click="isArchived(task.id)">
+              Archivé
             </div>
           </div>
-          <div class="ui bottom attached green basic button" v-show="!isEditing && task.isDone && !task.isArchived"
-               @click="isDone(task.id)">
-            Terminé
-          </div>
-          <div class="ui bottom attached red basic button" v-show="!isEditing && !task.isDone && !task.isArchived"
-               @click="isDone(task.id)">
-            En attente
-          </div>
-          <div class="ui bottom attached yellow basic button" v-if="task.isArchived" v-show="!isEditing"
-               @click="isArchived(task.id)">
-            Archivé
-          </div>
-        </div>
 
-        <!--    Edition form-->
-        <div class="ui centered card mt-5" v-show="isEditing">
-          <div class="content">
-            <form>
-              <div class="ui form">
-                <div class="field">
-                  <label>Titre</label>
-                  <input type="text" v-model="task.title" ref="newTitle" >
+          <!--    Edition form-->
+          <div class="ui centered card mt-5" v-show="isEditing">
+            <div class="content">
+              <form>
+                <div class="ui form">
+                  <div class="field">
+                    <label>Titre</label>
+                    <input type="text" v-model="task.title" ref="newTitle">
+                  </div>
+                  <div class="field">
+                    <label>Description</label>
+                    <input type='text' v-model="task.description" ref="newDesc">
+                  </div>
+                  <div class="field">
+                    <label>Assigner cette tâche à :</label>
+                    <select type="text" v-model="task.owner" ref="taskOwner">
+                      <option v-for="user in users" :key="user.id" :value="user.name">{{ user.name }} ({{ user.email
+                        }})
+                      </option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label>Date de fin</label>
+                    <b-form-datepicker v-model="task.endDate" class="mb-2"
+                                       :date-format-options="{ day: 'numeric', month: 'numeric', year: 'numeric' }"
+                                       locale="fr"></b-form-datepicker>
+                  </div>
                 </div>
-                <div class="field">
-                  <label>Description</label>
-                  <input type='text' v-model="task.description" ref="newDesc" >
-                </div>
-                <div class="field">
-                  <label>Assigner cette tâche à :</label>
-                  <select type="text" v-model="task.owner" ref="taskOwner" >
-                    <option v-for="user in users" :key="user.id" :value="user.name">{{ user.name }} ({{ user.email }})</option>
-                  </select>
-                </div>
-                <div class="field">
-                  <label>Date de fin</label>
-                  <b-form-datepicker v-model="task.endDate" class="mb-2"
-                                     :date-format-options="{ day: 'numeric', month: 'numeric', year: 'numeric' }"
-                                     locale="fr" ></b-form-datepicker>
-                </div>
-              </div>
-            </form>
+              </form>
+            </div>
+            <button class="ui basic green button" v-show="isEditing" @click="editTask(task)">Enregistrer</button>
+            <button class="ui basic gray button" v-show="isEditing" type="reset" @click="isEditing = false">Annuler
+            </button>
           </div>
-          <button class="ui basic green button" v-show="isEditing" @click="editTask(task)">Enregistrer</button>
-          <button class="ui basic gray button" v-show="isEditing" type="reset" @click="isEditing = false">Annuler</button>
         </div>
       </div>
 
@@ -91,16 +97,17 @@
               <form>
                 <div class="field">
                   <label>Titre</label>
-                  <input v-model="taskTitle" type="text" name="title" ref="taskTitle" >
+                  <input v-model="taskTitle" type="text" name="title" ref="taskTitle">
                 </div>
                 <div class="field">
                   <label>Description</label>
-                  <input v-model="taskDesc" type="text" ref="taskDesc" >
+                  <input v-model="taskDesc" type="text" ref="taskDesc">
                 </div>
                 <div class="field">
                   <label>Assigner cette tâche à :</label>
                   <select type="text" v-model="taskOwner" ref="taskOwner" id="taskOwner">
-                    <option v-for="user in users" :key="user.id" :value="user.name">{{ user.name }} ({{ user.email }})</option>
+                    <option v-for="user in users" :key="user.id" :value="user.name">{{ user.name }} ({{ user.email }})
+                    </option>
                   </select>
                 </div>
                 <div class="field">
@@ -259,7 +266,7 @@ export default {
 
       this.$refs.taskTitle.focus()
       this.$refs.taskDesc.focus()
-      this.$refs.taskOwner.focus()
+      // this.$refs.taskOwner.focus()
       this.$refs.taskEndDate.focus()
     },
 
