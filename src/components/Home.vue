@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="mx-auto title">
+    <div class="mx-auto title mb-5">
       <h1 v-if="user">Bonjour, {{ user.displayName }}</h1>
       <h1 v-if="!user">ToDoList</h1>
       <p>Créez et partagez vos tâches en un clic !</p>
       <h5 v-if="!user">Veuillez vous connecter afin de profiter au maximum des fonctionnalités.</h5>
-      <div class="card mx-auto" v-if="user">
+      <div class="card mx-auto" v-for="task in tasks" :key="task.id" v-if="user && task.endDate === today && task.isDone === false && task.isArchived === false">
         <h3>Bientôt, il sera trop tard pour les effectuer...</h3>
         <div class="table-responsive pt-2 col-11 mx-auto">
           <table class="table">
