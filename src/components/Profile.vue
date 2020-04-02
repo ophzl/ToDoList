@@ -2,26 +2,27 @@
   <div>
     <ErrorMsg v-if="!user"/>
     <div v-if="user">
-    <div class="container pt-5">
-      <div class="card">
-        <div class="card-body">
-          <div class="col--1 ">
-            <h4>{{ user.displayName }}</h4>
-            <h5></h5>
-            <span>{{ user.email }}</span>
+      <div class="container pt-5">
+        <div class="card">
+          <div class="card-body">
+            <div class="col--1 ">
+              <h4>{{ user.displayName }}</h4>
+              <h5></h5>
+              <span>{{ user.email }}</span>
+            </div>
+            <hr>
+            <div class="col-12 tital ">Date de première connexion :</div>
+            <div class="col order-12">{{ creationTime }}</div>
+            <div class="clearfix bot-border"></div>
+            <div class="col-12 tital ">Date de dernière connexion :</div>
+            <div class="col order-12">{{ lastSignInTime }}</div>
+            <div class="clearfix bot-border"></div>
+            <div class="col order-12">
+              <button class="btn btn-outline-danger mt-2" @click="deleteAccount">Supprimer mon compte</button>
+            </div>
           </div>
-          <hr>
-          <div class="col-12 tital ">Date de première connexion :</div>
-          <div class="col order-12">{{ creationTime }}</div>
-          <div class="clearfix bot-border"></div>
-          <div class="col-12 tital ">Date de dernière connexion :</div>
-          <div class="col order-12">{{ lastSignInTime }}</div>
-          <div class="clearfix bot-border"></div>
-          <div class="col order-12">
-            <button class="btn btn-outline-danger mt-2" @click="deleteAccount">Supprimer mon compte</button></div>
         </div>
       </div>
-    </div>
 
       <!--    User's tasks list -->
       <h2 class="pt-5">Mes tâches</h2>
@@ -43,9 +44,10 @@
             <td v-if="task.endDate">{{ task.endDate }}</td>
             <td v-else-if="!task.endDate">Aucune date renseignée</td>
             <td class="align-middle" style="text-align: center">
-              <span class="text-warning" v-if="task.archived">Archivée</span>
-              <span class="text-success" v-if="task.done" v-show="!task.archived">Terminée</span>
-              <span class="text-danger" v-if="!task.done" v-show="!task.archived">En attente</span>
+              <button class="btn btn-outline-warning" v-if="task.isArchived" @click="isArchived(task.id)">Désarchiver
+              </button>
+              <button class="btn btn-outline-success" v-if="task.isDone" v-show="!task.isArchived" @click="isDone(task.id)">Terminée</button>
+              <button class="btn btn-outline-danger" v-if="!task.isDone" v-show="!task.isArchived" @click="isDone(task.id)">En attente</button>
             </td>
           </tr>
           </tbody>
@@ -60,7 +62,7 @@
 import Firebase from 'firebase'
 import Swal from 'sweetalert2'
 import ErrorMsg from './ErrorMsg'
-
+import db from '../../static/js/db'
 
 export default {
   name: 'Profile',
@@ -78,10 +80,10 @@ export default {
     }
   },
   methods: {
-    deleteAccount: function() {
+    deleteAccount: function () {
       Swal.fire({
         title: 'Attention',
-        text: "Êtes-vous sûr de vouloir supprimer votre compte ?\n(Cette action est irréversible.)",
+        text: 'Êtes-vous sûr de vouloir supprimer votre compte ?\n(Cette action est irréversible.)',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
@@ -93,14 +95,59 @@ export default {
             'Vous allez être redirigé vers la page d\'accueil',
             'success'
           )
-          Firebase.auth().currentUser.delete().then(function() {
+          Firebase.auth().currentUser.delete().then(function () {
             location.reload()
-          }).catch(function(error) {
+          }).catch(function (error) {
             console.log('error', error)
-          });
+          })
         }
       })
+    },
+
+    isArchived: function (taskID) {
+      if (this.user) {
+        const ref = db.collection('users')
+          .doc(this.user.uid)
+          .collection('tasks')
+          .doc(taskID)
+
+        ref.get().then(doc => {
+          const isArchived = doc.data().isArchived
+          if (isArchived) {
+            ref.update({
+              isArchived: !isArchived
+            })
+          } else {
+            ref.update({
+              isArchived: true
+            })
+          }
+        })
+      }
+    },
+
+    isDone: function (taskID) {
+      if (this.user) {
+        const ref = db.collection('users')
+          .doc(this.user.uid)
+          .collection('tasks')
+          .doc(taskID)
+
+        ref.get().then(doc => {
+          const isDone = doc.data().isDone
+          if (isDone) {
+            ref.update({
+              isDone: !isDone
+            })
+          } else {
+            ref.update({
+              isDone: true
+            })
+          }
+        })
+      }
     }
+
   }
 }
 </script>
