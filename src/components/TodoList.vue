@@ -3,7 +3,7 @@
     <ErrorMsg v-if="!user"/>
     <div v-if="user">
       <div v-for="task in tasks" :key="task.id">
-        <div class="ui centered card mt-5" v-show="!task.isArchived">
+        <div class="ui centered card mt-5">
           <div class="content" v-show="!isEditing">
             <div class="header">
               {{ task.title }}
@@ -54,15 +54,15 @@
               <div class="ui form">
                 <div class="field">
                   <label>Titre</label>
-                  <input type="text" v-model="task.title" ref="newTitle" required>
+                  <input type="text" v-model="task.title" ref="newTitle" >
                 </div>
                 <div class="field">
                   <label>Description</label>
-                  <input type='text' v-model="task.description" ref="newDesc" required>
+                  <input type='text' v-model="task.description" ref="newDesc" >
                 </div>
                 <div class="field">
                   <label>Assigner cette tâche à :</label>
-                  <select type="text" v-model="task.owner" ref="taskOwner" required>
+                  <select type="text" v-model="task.owner" ref="taskOwner" >
                     <option v-for="user in users" :key="user.id" :value="user.name">{{ user.name }} ({{ user.email }})</option>
                   </select>
                 </div>
@@ -70,12 +70,13 @@
                   <label>Date de fin</label>
                   <b-form-datepicker v-model="task.endDate" class="mb-2"
                                      :date-format-options="{ day: 'numeric', month: 'numeric', year: 'numeric' }"
-                                     locale="fr" required></b-form-datepicker>
+                                     locale="fr" ></b-form-datepicker>
                 </div>
               </div>
             </form>
           </div>
-          <button class="ui basic green button " v-show="isEditing" @click="editTask(task)">Enregistrer</button>
+          <button class="ui basic green button" v-show="isEditing" @click="editTask(task)">Enregistrer</button>
+          <button class="ui basic gray button" v-show="isEditing" type="reset" @click="isEditing = false">Annuler</button>
         </div>
       </div>
 
@@ -90,11 +91,11 @@
               <form>
                 <div class="field">
                   <label>Titre</label>
-                  <input v-model="taskTitle" type="text" name="title" ref="taskTitle" required>
+                  <input v-model="taskTitle" type="text" name="title" ref="taskTitle" >
                 </div>
                 <div class="field">
                   <label>Description</label>
-                  <input v-model="taskDesc" type="text" ref="taskDesc" required>
+                  <input v-model="taskDesc" type="text" ref="taskDesc" >
                 </div>
                 <div class="field">
                   <label>Assigner cette tâche à :</label>
@@ -105,7 +106,7 @@
                 <div class="field">
                   <label>Date de fin</label>
                   <b-form-datepicker v-model="taskEndDate" ref="taskEndDate" class="mb-2"
-                                     locale="fr-FR" required></b-form-datepicker>
+                                     locale="fr-FR"></b-form-datepicker>
                 </div>
                 <div class="ui two button attached buttons">
                   <button class="ui basic blue button" type="submit" @click="handleAdd">
@@ -163,14 +164,21 @@ export default {
             ref.update({
               isArchived: !isArchived
             })
+            Swal.fire({
+              title: 'Désarchivée !',
+              text: 'Votre tâche n\'est plus archivée.\nVous pouvez à nouveau la consulter depuis la liste des tâches.',
+              icon: 'success',
+              timer: '1500'
+            })
           } else {
             ref.update({
               isArchived: true
             })
             Swal.fire({
               title: 'Archivée !',
-              text: 'Votre tâche a été archivée.\nPour la désarchiver, rendez-vous dans votre profil.',
+              text: 'Votre tâche a été archivée.',
               icon: 'success',
+              timer: '1500'
             })
           }
         })
@@ -190,9 +198,21 @@ export default {
             ref.update({
               isDone: !isDone
             })
+            Swal.fire({
+              title: 'En attente !',
+              text: 'Votre tâche est repassée en attente.',
+              icon: 'success',
+              timer: '1500'
+            })
           } else {
             ref.update({
               isDone: true
+            })
+            Swal.fire({
+              title: 'Terminée !',
+              text: 'Votre tâche est désormais terminée.',
+              icon: 'success',
+              timer: '1500'
             })
           }
         })
@@ -218,6 +238,12 @@ export default {
             owner: owner
           })
         })
+        Swal.fire({
+          title: 'Sauvegardé !',
+          text: 'Vos modifications ont été apportées.',
+          icon: 'success',
+          timer: '1500'
+        })
         this.isEditing = false
       }
     },
@@ -235,8 +261,6 @@ export default {
       this.$refs.taskDesc.focus()
       this.$refs.taskOwner.focus()
       this.$refs.taskEndDate.focus()
-
-      console.log('handleAdd', this.taskOwner)
     },
 
     openEditForm () {

@@ -92,7 +92,6 @@ export default {
         if (result.value) {
           Swal.fire(
             'Compte supprimé !',
-            'Vous allez être redirigé vers la page d\'accueil',
             'success'
           )
           Firebase.auth().currentUser.delete().then(function () {
