@@ -18,6 +18,8 @@ export default {
       user: null,
       tasks: [],
       users: [],
+
+      taskID: ''
     }
   },
   methods: {
@@ -62,69 +64,84 @@ export default {
   },
   mounted () {
     Firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.user = user
+        if (user) {
+          this.user = user
 
-        db.collection('users')
-          .doc(this.user.uid)
-          .collection('tasks')
-          .onSnapshot(snapshot => {
-            snapshot.docChanges().forEach(change => {
-              let doc = change.doc
-              if (change.type === 'added') {
-                this.tasks.push({
-                  id: doc.id,
-                  title: doc.data().title,
-                  description: doc.data().description,
-                  isDone: doc.data().isDone,
-                  isArchived: doc.data().isArchived,
-                  endDate: doc.data().endDate,
-                  owner: doc.data().owner
+          db.collection('users')
+            .doc(this.user.uid)
+            .collection('tasks')
+            .onSnapshot(snapshot => {
+                snapshot.docChanges().forEach(change => {
+                  let doc = change.doc
+                  if (change.type === 'added') {
+                    this.tasks.push({
+                      id: doc.id,
+                      title: doc.data().title,
+                      description: doc.data().description,
+                      isDone: doc.data().isDone,
+                      isArchived: doc.data().isArchived,
+                      endDate: doc.data().endDate,
+                      owner: doc.data().owner
+                    })
+                  }
+                  if (change.type === 'modified') {
+                    for (let key in this.tasks) {
+                      if (this.tasks[key].id !== doc.id) {
+                        console.log('retry')
+                      } else {
+                        this.tasks.splice(key, 1)
+                        this.tasks.push({
+                          id: doc.id,
+                          title: doc.data().title,
+                          description: doc.data().description,
+                          isDone: doc.data().isDone,
+                          isArchived: doc.data().isArchived,
+                          endDate: doc.data().endDate,
+                          owner: doc.data().owner
+                        })
+                      }
+                    }
+                  }
+                  if (change.type === 'removed') {
+                    for (let key in this.tasks) {
+                      if (this.tasks[key].id !== doc.id) {
+                        console.log('retry')
+                      } else {
+                        this.tasks.splice(key, 1)
+                      }
+                    }
+                  }
                 })
               }
-              if (change.type === 'modified') {
-                this.tasks.pop()
-                this.tasks.push({
-                  id: doc.id,
-                  title: doc.data().title,
-                  description: doc.data().description,
-                  isDone: doc.data().isDone,
-                  isArchived: doc.data().isArchived,
-                  endDate: doc.data().endDate,
-                  owner: doc.data().owner
-                })
-              }
-              if (change.type === 'removed') {
-                this.tasks.pop()
-              }
-            })
-          })
+            )
 
-        db.collection('users')
-          .get()
-          .then(snapshot => {
-            if (snapshot.empty) {
-              console.log('null')
-              return
-            }
-            snapshot.forEach(doc => {
-              this.users.push({
-                id: doc.id,
-                name: doc.data()['name'],
-                email: doc.data()['email'],
-                role: doc.data()['role'],
+          db.collection('users')
+            .get()
+            .then(snapshot => {
+              if (snapshot.empty) {
+                console.log('null')
+                return
+              }
+              snapshot.forEach(doc => {
+                this.users.push({
+                  id: doc.id,
+                  name: doc.data()['name'],
+                  email: doc.data()['email'],
+                  role: doc.data()['role'],
+                })
               })
             })
-          })
-          .catch(err => {
-            console.log('error:', err)
-          })
+            .catch(err => {
+              console.log('error:', err)
+            })
+        }
       }
-    })
+    )
   },
   components: {
     Navbar
-  },
+  }
+  ,
 }
 </script>
 
