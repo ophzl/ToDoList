@@ -187,7 +187,7 @@ export default {
             })
             Swal.fire({
               title: 'Archivée !',
-              text: 'Votre tâche a été archivée.',
+              text: 'Votre tâche a été archivée. Vous pouvez désormais la retrouver dans l\'onglet "Archives"',
               icon: 'success',
               timer: '1500'
             })
