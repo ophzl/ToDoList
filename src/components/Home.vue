@@ -26,7 +26,7 @@
               <td v-if="task.owner">{{ task.owner }}</td>
               <td v-else-if="!task.owner">Aucun membre</td>
               <td v-if="task.owner">{{ task.endDate }}</td>
-              <td v-else-if="!task.owner">Pas de date}</td>
+              <td v-else-if="!task.owner">Pas de date</td>
               <td class="align-middle" style="text-align: center">
                 <span class="text-danger" v-if="!task.isDone" v-show="!task.isArchived">En attente</span>
               </td>
