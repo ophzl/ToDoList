@@ -206,13 +206,13 @@ export default {
 
         ref.get().then(doc => {
           const isDone = doc.data().isDone
-          if (!isDone) {
+          if (isDone) {
             ref.update({
               isDone: !isDone
             })
             Swal.fire({
-              title: 'Terminée !',
-              text: 'Votre tâche est désormais terminée.',
+              title: 'En attente !',
+              text: 'Votre tâche est repassée en attente.',
               icon: 'success',
               timer: '1500'
             })
@@ -221,8 +221,8 @@ export default {
               isDone: true
             })
             Swal.fire({
-              title: 'En attente !',
-              text: 'Votre tâche est repassée en attente.',
+              title: 'Terminée !',
+              text: 'Votre tâche est désormais terminée.',
               icon: 'success',
               timer: '1500'
             })

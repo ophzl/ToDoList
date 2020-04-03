@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Ma liste</h1>
+    <h1>Mes archives</h1>
     <div class="card mx-auto" v-for="task in tasks" :key="task.id"
          v-if="user && task.isArchived === true">
       <div class="table-responsive pt-2 col-11 mx-auto">
