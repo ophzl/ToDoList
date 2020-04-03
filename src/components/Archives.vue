@@ -1,8 +1,8 @@
 <template>
   <div>
+    <h1>Ma liste</h1>
     <div class="card mx-auto" v-for="task in tasks" :key="task.id"
          v-if="user && task.isArchived === true">
-      <h3>Mes archives</h3>
       <div class="table-responsive pt-2 col-11 mx-auto">
         <table class="table">
           <thead>

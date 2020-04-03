@@ -13,15 +13,15 @@
                   <tr>
                     <th scope="col">Nom</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Rôle</th>
+<!--                    <th scope="col">Rôle</th>-->
                   </tr>
                   </thead>
                   <tbody>
                   <tr v-for="user in users" :key="user.id">
                     <td>{{ user['name'] }}</td>
                     <td>{{ user['email'] }}</td>
-                    <td v-if="user['role'] === 'administrator'">Administrateur</td>
-                    <td v-if="user['role'] === 'member'">Membre</td>
+<!--                    <td v-if="user['role'] === 'administrator'">Administrateur</td>-->
+<!--                    <td v-if="user['role'] === 'member'">Membre</td>-->
                   </tr>
                   </tbody>
                 </table>

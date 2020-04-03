@@ -2,8 +2,9 @@
   <div>
     <ErrorMsg v-if="!user"/>
     <div v-if="user">
+      <h1>Ma liste</h1>
       <div class="card-columns p-3">
-        <div v-for="task in tasks" :key="task.id">
+        <div v-for="task in tasks" :key="task.id" v-show="!task.isArchived">
           <div class="ui centered card mt-1">
             <div class="content" v-show="!isEditing">
               <div class="header">
@@ -36,14 +37,14 @@
               </div>
             </div>
             <div class="pb-2">
-              <span class="badge bg-danger text-light" v-show="!isEditing && task.isDone">En attente</span>
-              <span class="badge bg-success text-light" v-show="!isEditing && !task.isDone">Terminée</span>
+              <span class="badge bg-success text-light" v-show="!isEditing && task.isDone">Terminée</span>
+              <span class="badge bg-danger text-light" v-show="!isEditing && !task.isDone">En attente</span>
             </div>
-            <div class="ui bottom attached green basic button" v-show="!isEditing && task.isDone && !task.isArchived"
+            <div class="ui bottom attached red basic button" v-show="!isEditing && task.isDone && !task.isArchived"
                  @click="isDone(task.id)">
               Mettre en attente
             </div>
-            <div class="ui bottom attached red basic button" v-show="!isEditing && !task.isDone && !task.isArchived"
+            <div class="ui bottom attached green basic button" v-show="!isEditing && !task.isDone && !task.isArchived"
                  @click="isDone(task.id)">
               Terminer
             </div>
@@ -207,21 +208,21 @@ export default {
           const isDone = doc.data().isDone
           if (!isDone) {
             ref.update({
-              isDone: true
-            })
-            Swal.fire({
-              title: 'En attente !',
-              text: 'Votre tâche est repassée en attente.',
-              icon: 'success',
-              timer: '1500'
-            })
-          } else {
-            ref.update({
               isDone: !isDone
             })
             Swal.fire({
               title: 'Terminée !',
               text: 'Votre tâche est désormais terminée.',
+              icon: 'success',
+              timer: '1500'
+            })
+          } else {
+            ref.update({
+              isDone: true
+            })
+            Swal.fire({
+              title: 'En attente !',
+              text: 'Votre tâche est repassée en attente.',
               icon: 'success',
               timer: '1500'
             })
