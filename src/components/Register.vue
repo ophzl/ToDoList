@@ -6,16 +6,16 @@
           <div class="col-lg-8">
             <div class="card bg-light">
               <div class="card-body">
-                <h3 class="font-weight-light mb-3">Register</h3>
+                <h3 class="font-weight-light mb-3">S'inscrire</h3>
                 <div class="form-row">
                   <div v-if="error" class="col-12 alert alert-danger px-3">{{ error }}</div>
                   <section class="col-sm-12 form-group">
-                    <label class="form-control-label sr-only" for="displayName">Display Name</label>
+                    <label class="form-control-label sr-only" for="displayName">Votre nom</label>
                     <input
                       class="form-control"
                       type="text"
                       id="displayName"
-                      placeholder="Display Name"
+                      placeholder="Votre nom"
                       name="displayName"
                       required
                       v-model="displayName"
@@ -39,7 +39,7 @@
                     <input
                       class="form-control"
                       type="password"
-                      placeholder="Password"
+                      placeholder="Mot de passe"
                       v-model="passOne"
                     />
                   </section>
@@ -48,13 +48,13 @@
                       class="form-control"
                       type="password"
                       required
-                      placeholder="Repeat Password"
+                      placeholder="Confirmer votre mot de passe"
                       v-model="passTwo"
                     />
                   </section>
                 </div>
                 <div class="form-group text-right mb-0">
-                  <button class="btn btn-primary" type="submit">Register</button>
+                  <button class="btn btn-primary" type="submit">S'incrire</button>
                 </div>
               </div>
             </div>
@@ -63,8 +63,8 @@
       </div>
     </form>
     <p class="text-center mt-2">
-      or
-      <router-link to="/login">login</router-link>
+      ou
+      <router-link to="/login">se connecter</router-link>
     </p>
   </div>
 </template>

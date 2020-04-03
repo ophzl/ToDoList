@@ -38,8 +38,8 @@
       </div>
     </form>
     <p class="text-center mt-2">
-      or
-      <router-link to="/register">register</router-link>
+      ou
+      <router-link to="/register">s'incrire</router-link>
     </p>
   </div>
 </template>
