@@ -56,6 +56,7 @@ export default {
     }
   },
   methods: {
+    // Login function with firebase authentication
     login: function () {
       const info = {
         email: this.email,

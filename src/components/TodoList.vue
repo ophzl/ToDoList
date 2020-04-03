@@ -93,7 +93,7 @@
 
       <!--    Create task-->
       <div class="ui basic content center aligned segment">
-        <button class="ui basic button icon" @click="openForm" v-show="!isCreating">
+        <button class="ui basic button icon" @click="openAddForm" v-show="!isCreating">
           <i class="plus icon"></i> Ajouter une tâche
         </button>
         <div class="ui centered card" v-show="isCreating">
@@ -163,6 +163,7 @@ export default {
     }
   },
   methods: {
+    // Get isArchived status of a task and change its status on click
     isArchived: function (taskID) {
       if (this.user) {
         const ref = db.collection('users')
@@ -197,6 +198,7 @@ export default {
       }
     },
 
+    // Get isDone data of a task and change its value on click
     isDone: function (taskID) {
       if (this.user) {
         const ref = db.collection('users')
@@ -231,6 +233,7 @@ export default {
       }
     },
 
+    // When a task is updated, change values of inputs and send them in DB
     editTask: function (task) {
       if (this.user) {
         const ref = db.collection('users')
@@ -260,6 +263,7 @@ export default {
       }
     },
 
+    // Function to add a task which call an event "addTask" defined in App.vue
     handleAdd: function () {
       this.$emit('addTask', this.taskTitle, this.taskDesc, this.taskOwner, this.taskEndDate, this.taskIsDone, this.taskIsArchived)
       this.taskTitle = null
@@ -275,10 +279,13 @@ export default {
       this.$refs.taskEndDate.focus()
     },
 
+    // Open Edit form on click
     openEditForm () {
       this.isEditing = true
     },
-    openForm () {
+
+    // Open Add form on click
+    openAddForm () {
       this.isCreating = true
     },
     // Close creation form
@@ -287,6 +294,7 @@ export default {
     },
   },
   mounted () {
+    // Get users in DB and stock them in an array
     db.collection('users')
       .get()
       .then(snapshot => {

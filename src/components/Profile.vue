@@ -71,6 +71,7 @@ export default {
     ErrorMsg
   },
   data () {
+    // Get user's data to display its last sign in and creation date
     let lastSignInTime = Firebase.auth().currentUser.metadata.lastSignInTime
     let creationTime = Firebase.auth().currentUser.metadata.creationTime
 
@@ -80,6 +81,7 @@ export default {
     }
   },
   methods: {
+    // Function for user to delete its account on firebase authentication
     deleteAccount: function () {
       Swal.fire({
         title: 'Attention',
@@ -103,6 +105,7 @@ export default {
       })
     },
 
+    // Get isArchived status of a task and change its status on click
     isArchived: function (taskID) {
       if (this.user) {
         const ref = db.collection('users')
@@ -125,6 +128,7 @@ export default {
       }
     },
 
+    // Get isDone data of a task and change its value on click
     isDone: function (taskID) {
       if (this.user) {
         const ref = db.collection('users')

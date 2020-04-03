@@ -23,6 +23,7 @@ export default {
     }
   },
   methods: {
+    // Function to logout with firebase authentication
     logout: function () {
       Firebase.auth()
         .signOut()
@@ -33,6 +34,7 @@ export default {
         })
     },
 
+    // Event called in ToDoList.vue which let user to add a task with its values by its uid
     addTask: function (title, desc, owner, endDate) {
       db.collection('users')
         .doc(this.user.uid)
@@ -47,6 +49,7 @@ export default {
         })
     },
 
+    // Function send new values in DB when a task is updated
     editTask: function (task) {
       db.collection('users')
         .doc(this.user.id)
@@ -54,6 +57,7 @@ export default {
         .doc(task)
     },
 
+    // Function to delete a task from DB
     deleteTask: function (task) {
       db.collection('users')
         .doc(this.user.uid)
@@ -63,10 +67,12 @@ export default {
     }
   },
   mounted () {
+    // Condition to charge data only if user is logged in
     Firebase.auth().onAuthStateChanged(user => {
         if (user) {
           this.user = user
 
+          // Get data in firebase auth and set it into DB by the uid of a user
           db.collection('users')
             .doc(this.user.uid)
             .set({
@@ -75,12 +81,14 @@ export default {
               role: 'member'
             })
 
+          // Display tasks in DOM
           db.collection('users')
             .doc(this.user.uid)
             .collection('tasks')
             .onSnapshot(snapshot => {
                 snapshot.docChanges().forEach(change => {
                   let doc = change.doc
+                  // When a task is added
                   if (change.type === 'added') {
                     this.tasks.push({
                       id: doc.id,
@@ -92,6 +100,7 @@ export default {
                       owner: doc.data().owner
                     })
                   }
+                  // When a task is updated
                   if (change.type === 'modified') {
                     for (let key in this.tasks) {
                       if (this.tasks[key].id !== doc.id) {
@@ -110,6 +119,7 @@ export default {
                       }
                     }
                   }
+                  // When a task is removed
                   if (change.type === 'removed') {
                     for (let key in this.tasks) {
                       if (this.tasks[key].id !== doc.id) {
@@ -123,6 +133,7 @@ export default {
               }
             )
 
+          // Get users data
           db.collection('users')
             .get()
             .then(snapshot => {

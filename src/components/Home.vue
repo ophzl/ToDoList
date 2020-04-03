@@ -47,6 +47,7 @@ export default {
   components: {
   },
   data () {
+    // Set today's date to compare with tasks end date and print them if values are corresponding
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!

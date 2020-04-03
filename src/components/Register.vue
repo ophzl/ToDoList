@@ -83,6 +83,7 @@ export default {
     }
   },
   methods: {
+    // Register function with firebase authentication
     register: function () {
       const info = {
         email: this.email,
@@ -110,6 +111,7 @@ export default {
     }
   },
   watch: {
+    // This function permits to check if passwords are corresponding
     passTwo: function () {
       if (this.passOne !== '' && this.passTwo !== '' && this.passTwo() !== this.passOne) {
         this.error = 'passwords must match'
