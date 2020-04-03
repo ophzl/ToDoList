@@ -41,11 +41,11 @@
             </div>
             <div class="ui bottom attached green basic button" v-show="!isEditing && task.isDone && !task.isArchived"
                  @click="isDone(task.id)">
-              Terminer
+              Mettre en attente
             </div>
             <div class="ui bottom attached red basic button" v-show="!isEditing && !task.isDone && !task.isArchived"
                  @click="isDone(task.id)">
-              Mettre en attente
+              Terminer
             </div>
             <div class="ui bottom attached yellow basic button" v-if="task.isArchived" v-show="!isEditing"
                  @click="isArchived(task.id)">
@@ -205,9 +205,9 @@ export default {
 
         ref.get().then(doc => {
           const isDone = doc.data().isDone
-          if (isDone) {
+          if (!isDone) {
             ref.update({
-              isDone: !isDone
+              isDone: true
             })
             Swal.fire({
               title: 'En attente !',
@@ -217,7 +217,7 @@ export default {
             })
           } else {
             ref.update({
-              isDone: true
+              isDone: !isDone
             })
             Swal.fire({
               title: 'Terminée !',
