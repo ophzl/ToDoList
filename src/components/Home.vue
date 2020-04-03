@@ -22,9 +22,11 @@
             <tr v-for="task in tasks" :key="task.id" v-if="task.endDate === today && task.isDone === false && task.isArchived === false">
               <td>{{ task.title }}</td>
               <td v-if="task.description">{{ task.description }}</td>
-              <td v-if="task.owner">{{ task.owner }}</td>
               <td v-else-if="!task.description">Aucune description renseignée</td>
-              <td>{{ task.endDate }}</td>
+              <td v-if="task.owner">{{ task.owner }}</td>
+              <td v-else-if="!task.owner">Aucun membre</td>
+              <td v-if="task.owner">{{ task.endDate }}</td>
+              <td v-else-if="!task.owner">{{ task.endDate }}</td>
               <td class="align-middle" style="text-align: center">
                 <span class="text-danger" v-if="!task.isDone" v-show="!task.isArchived">En attente</span>
               </td>
