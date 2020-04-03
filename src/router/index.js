@@ -10,6 +10,7 @@ import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
 import UserPanel from '../components/UserPanel'
 import Login from '../components/Login'
 import Register from '../components/Register'
+import Archives from '../components/Archives'
 
 Vue.use(Router)
 Vue.use(BootstrapVue)
@@ -41,6 +42,10 @@ export default new Router({
       path: '/users',
       name: 'users',
       component: UserPanel
+    }, {
+      path: '/archives',
+      name: 'archives',
+      component: Archives
     }
   ]
 })

@@ -15,8 +15,10 @@
           <router-link class="nav-link" to="/todolist" v-if="user">Liste des tâches</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/users" v-if="user">Gestion des utilisateurs</router-link>
-          <!-- Ajouter rôle administrateur -->
+          <router-link class="nav-link" to="/users" v-if="user">Liste des utilisateurs</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/archives" v-if="user">Archives</router-link>
         </li>
       </ul>
       <div class="nav-item dropdown">
