@@ -25,23 +25,27 @@
                   <i class="twitter icon"></i>
                 </a>
                 <span class="right floated trash icon" @click="$emit('deleteTask', task.id)">
-              <i class="trash icon"></i>
-            </span>
+                  <i class="trash icon"></i>
+                </span>
                 <span class="right floated archive icon" @click="isArchived(task.id)">
-              <i class="archive icon"></i>
-            </span>
+                  <i class="archive icon"></i>
+                </span>
                 <span class="right floated edit icon" @click="openEditForm()">
-              <i class="edit icon"></i>
-            </span>
+                  <i class="edit icon"></i>
+                </span>
               </div>
+            </div>
+            <div class="pb-2">
+              <span class="badge bg-danger text-light" v-show="!isEditing && task.isDone">En attente</span>
+              <span class="badge bg-success text-light" v-show="!isEditing && !task.isDone">Terminée</span>
             </div>
             <div class="ui bottom attached green basic button" v-show="!isEditing && task.isDone && !task.isArchived"
                  @click="isDone(task.id)">
-              Terminé
+              Terminer
             </div>
             <div class="ui bottom attached red basic button" v-show="!isEditing && !task.isDone && !task.isArchived"
                  @click="isDone(task.id)">
-              En attente
+              Mettre en attente
             </div>
             <div class="ui bottom attached yellow basic button" v-if="task.isArchived" v-show="!isEditing"
                  @click="isArchived(task.id)">
